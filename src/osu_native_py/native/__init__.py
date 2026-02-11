@@ -9,7 +9,7 @@ if sys.platform == "win32":
     PLATFORM_DIR = "win-x64"
 elif sys.platform == "darwin":
     LIB_NAME = "osu.Native.dylib"
-    PLATFORM_DIR = "osx-x64"
+    PLATFORM_DIR = "osx-arm64"
 else:
     LIB_NAME = "osu.Native.so"
     PLATFORM_DIR = "linux-x64"
@@ -31,7 +31,20 @@ if not LIB_PATH.exists():
         f"Available files in {BIN_DIR}: {list(BIN_DIR.iterdir()) if BIN_DIR.exists() else 'directory does not exist'}",
     )
 
-os.environ.setdefault("OSUPY_LIBRARY_PATH", str(BIN_DIR))
+if sys.platform == "win32":
+    os.environ["PATH"] = str(BIN_DIR) + os.pathsep + os.environ.get("PATH", "")
+    try:
+        os.add_dll_directory(str(BIN_DIR))  # type: ignore[attr-defined]
+    except (AttributeError, OSError):
+        pass
+elif sys.platform == "darwin":
+    os.environ["DYLD_LIBRARY_PATH"] = (
+        str(BIN_DIR) + os.pathsep + os.environ.get("DYLD_LIBRARY_PATH", "")
+    )
+else:
+    os.environ["LD_LIBRARY_PATH"] = (
+        str(BIN_DIR) + os.pathsep + os.environ.get("LD_LIBRARY_PATH", "")
+    )
 
 from . import bindings
 
@@ -52,15 +65,6 @@ NativeOsuPerformanceAttributes = bindings.NativeOsuPerformanceAttributes
 NativeTaikoPerformanceAttributes = bindings.NativeTaikoPerformanceAttributes
 NativeCatchPerformanceAttributes = bindings.NativeCatchPerformanceAttributes
 NativeManiaPerformanceAttributes = bindings.NativeManiaPerformanceAttributes
-
-lib_handle = bindings._libs.get(LIB_NAME)
-if lib_handle is None:
-    available = list(bindings._libs.keys())
-    raise ImportError(
-        f"Failed to load {LIB_NAME} from {BIN_DIR}\n"
-        f"Available libraries: {available}\n"
-        f"This might indicate an incompatible binary or missing dependencies.",
-    )
 
 __all__ = [
     "LIB_NAME",

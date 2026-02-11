@@ -46,15 +46,15 @@ copy-native:
 
 generate-bindings:
 	poetry run ctypesgen $(OUTPUT_DIR)/generated/cabinet.h \
-		-l $(LIB_NAME) \
+		-l osu.Native \
 		-o $(PY_BINDINGS) \
 		-D "bool=char" \
 		--allow-gnu-c \
 		--no-macro-warnings \
 		--no-gnu-types
-	@echo "Patching bindings.py for dynamic library loading..."
-	@# Replace add_library_search_dirs([]) with a call to get path from environment
-	@$(SED_INPLACE) 's|add_library_search_dirs(\[\])|add_library_search_dirs([os.environ.get("OSUPY_LIBRARY_PATH", "")])|' $(PY_BINDINGS)
+	# Replace add_library_search_dirs([]) with code that adds the runtime BIN_DIR
+	sed -i.bak 's|add_library_search_dirs(\[\])|import os, sys; from pathlib import Path; _bin_dir = Path(__file__).parent / "bin" / ("win-x64" if sys.platform == "win32" else "osx-arm64" if sys.platform == "darwin" else "linux-x64"); add_library_search_dirs([str(_bin_dir)])|' $(PY_BINDINGS)
+	rm -f $(PY_BINDINGS).bak
 
 lint:
 	poetry run pre-commit run --all-files

@@ -22,7 +22,7 @@ jobs:
             platform: win-x64
             lib_name: osu.Native.dll
           - os: macos-latest
-            platform: osx-x64
+            platform: osx-arm64
             lib_name: osu.Native.dylib
           - os: ubuntu-latest
             platform: linux-x64
@@ -83,28 +83,30 @@ jobs:
       - name: Organize native libraries
         shell: bash
         run: |
-          mkdir -p src/osu_native_py/native/bin/{win-x64,osx-x64,linux-x64}
+          mkdir -p src/osu_native_py/native/bin/{win-x64,osx-arm64,linux-x64}
+          mkdir -p build/generated
 
           cp artifacts/native-win-x64/osu.Native.dll src/osu_native_py/native/bin/win-x64/
-          cp artifacts/native-osx-x64/osu.Native.dylib src/osu_native_py/native/bin/osx-x64/
+          cp artifacts/native-osx-arm64/osu.Native.dylib src/osu_native_py/native/bin/osx-arm64/
           cp artifacts/native-linux-x64/osu.Native.so src/osu_native_py/native/bin/linux-x64/
 
           cp artifacts/native-linux-x64/cabinet.h build/generated/
 
       - name: Generate Python bindings
         run: |
-          mkdir -p build/generated
           ctypesgen build/generated/cabinet.h \
-            -l osu.Native.so \
+            -l osu.Native \
             -o src/osu_native_py/native/bindings.py \
             -D "bool=char" \
             --allow-gnu-c \
             --no-macro-warnings \
             --no-gnu-types
 
-      - name: Patch bindings for dynamic loading
+      - name: Patch bindings for multi-platform support
+        shell: bash
         run: |
-          sed -i 's|add_library_search_dirs(\[\])|add_library_search_dirs([os.environ.get("OSUPY_LIBRARY_PATH", "")])|' src/osu_native_py/native/bindings.py
+          sed -i.bak 's|add_library_search_dirs(\[\])|import os, sys; from pathlib import Path; _bin_dir = Path(__file__).parent / "bin" / ("win-x64" if sys.platform == "win32" else "osx-arm64" if sys.platform == "darwin" else "linux-x64"); add_library_search_dirs([str(_bin_dir)])|' src/osu_native_py/native/bindings.py
+          rm -f src/osu_native_py/native/bindings.py.bak
 
       - name: Build wheel
         run: poetry build -f wheel
@@ -142,8 +144,8 @@ jobs:
       - name: Install wheel and dependencies
         shell: bash
         run: |
-          pip install --upgrade pip
-          pip install poetry pytest
+          python -m pip install --upgrade pip || true
+          pip install poetry pytest pytest-cov
           pip install dist/*.whl
 
       - name: Run tests
