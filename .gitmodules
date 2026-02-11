@@ -1,0 +1,3 @@
+[submodule "osu-native"]
+	path = osu-native
+	url = https://github.com/minisbett/osu-native

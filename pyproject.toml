@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "osu-native-py"
+version = "0.0.0"
+description = "A Python wrapper for the osu! native library, providing high-level interfaces for beatmap parsing, mod application, and difficulty/performance calculations."
+authors = ["7mochi <flyingcatdm@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/7mochi/osu-native-py"
+keywords = ["osu", "osu!", "difficulty", "performance", "pp"]
+packages = [{include = "osu_native_py", from = "src"}]
+include = [
+    {path = "src/osu_native_py/native/bin/**/*", format = ["sdist", "wheel"]},
+    {path = "src/osu_native_py/native/bindings.py", format = ["sdist", "wheel"]},
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+
+[tool.poetry.group.dev.dependencies]
+ctypesgen = "^1.1.1"
+isort = "^5.13.0"
+autoflake = "^2.0.0"
+mypy = "^1.0.0"
+black = "^24.0.0"
+pre-commit = "^3.3.0"
+pytest = "^8.0.0"
+pytest-cov = "^4.0.0"
+
+[tool.isort]
+add_imports = ["from __future__ import annotations"]
+force_single_line = true
+profile = "black"
+line_length = 100
+skip_gitignore = true
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--cov=osu_native_py",
+    "--cov-report=term-missing",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/native/bindings.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
