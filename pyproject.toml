@@ -7,6 +7,23 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/7mochi/osu-native-py"
 keywords = ["osu", "osu!", "difficulty", "performance", "pp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Games/Entertainment",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 packages = [{include = "osu_native_py", from = "src"}]
 include = [
     {path = "src/osu_native_py/native/bin/**/*", format = ["sdist", "wheel"]},
