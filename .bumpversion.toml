@@ -1,0 +1,10 @@
+[tool.bumpversion]
+current_version = "0.0.0"
+commit = true
+tag = true
+message = "chore: publish library to pypi"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
