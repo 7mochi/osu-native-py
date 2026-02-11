@@ -1,0 +1,48 @@
+name: "Bump osu-native-py version"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Set Git author
+        run: |
+          git config user.name "7mochi-bot"
+          git config user.email "bot@osupe.ru"
+
+      - uses: actions/setup-python@v6.2.0
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install --upgrade bump-my-version
+
+      - name: Bump version
+        run: bump-my-version bump ${{ github.event.inputs.version }} --allow-dirty --tag-name "osu-native-jar-v{new_version}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.PAT }}
