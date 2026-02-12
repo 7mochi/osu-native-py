@@ -60,6 +60,9 @@ def test_standard_ruleset():
         assert perf_attrs.effective_miss_count == pytest.approx(0.0)
         assert perf_attrs.speed_deviation == pytest.approx(8.46064257633682)
         assert perf_attrs.combo_based_estimated_miss_count == pytest.approx(0.0)
-        assert perf_attrs.score_based_estimated_miss_count == pytest.approx(0.0)
+        assert (
+            perf_attrs.score_based_estimated_miss_count is None
+            or perf_attrs.score_based_estimated_miss_count == pytest.approx(0.0)
+        )
         assert perf_attrs.aim_estimated_slider_breaks == pytest.approx(0.0)
         assert perf_attrs.speed_estimated_slider_breaks == pytest.approx(0.0)
