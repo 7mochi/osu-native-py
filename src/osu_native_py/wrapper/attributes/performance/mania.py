@@ -8,6 +8,12 @@ from .base import PerformanceAttributes
 
 @dataclass
 class ManiaPerformanceAttributes(PerformanceAttributes):
+    """Performance attributes for osu!mania mode.
+
+    Attributes:
+        difficulty: The difficulty portion of the final performance points.
+    """
+
     difficulty: float
 
     @classmethod

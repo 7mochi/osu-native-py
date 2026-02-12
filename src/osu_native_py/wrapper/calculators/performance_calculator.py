@@ -24,6 +24,12 @@ from ..utils.native_handler import NativeHandler
 
 
 class PerformanceCalculator(NativeHandler, ABC):
+    """Base class for performance calculators.
+
+    Calculates the performance attributes of a score on a beatmap.
+    This is an abstract base class that must be subclassed for each game mode.
+    """
+
     def __init__(self, handle: ManagedObjectHandle):
         super().__init__(handle)
 
@@ -36,14 +42,30 @@ class PerformanceCalculator(NativeHandler, ABC):
         score_info: ScoreInfo,
         difficulty_attributes: DifficultyAttributes,
     ) -> PerformanceAttributes:
-        pass
+        """Calculate the performance attributes of a score.
+
+        Args:
+            ruleset: The ruleset for the beatmap.
+            beatmap: The beatmap the score was set on.
+            mods: The mods to apply to the beatmap.
+            score_info: Information about the score.
+            difficulty_attributes: The difficulty attributes for the beatmap.
+
+        Returns:
+            A structure describing the performance of the score.
+        """
 
     @abstractmethod
     def close(self) -> None:
-        pass
+        """Release native resources.
+
+        Must be called when the calculator is no longer needed.
+        """
 
 
 class OsuPerformanceCalculator(PerformanceCalculator):
+    """Performance calculator for osu!standard mode."""
+
     @classmethod
     def create(cls) -> OsuPerformanceCalculator:
         native_calc = bindings.NativeOsuPerformanceCalculator()
@@ -111,6 +133,8 @@ class OsuPerformanceCalculator(PerformanceCalculator):
 
 
 class TaikoPerformanceCalculator(PerformanceCalculator):
+    """Performance calculator for osu!taiko mode."""
+
     @classmethod
     def create(cls) -> TaikoPerformanceCalculator:
         native_calc = bindings.NativeTaikoPerformanceCalculator()
@@ -165,6 +189,8 @@ class TaikoPerformanceCalculator(PerformanceCalculator):
 
 
 class CatchPerformanceCalculator(PerformanceCalculator):
+    """Performance calculator for osu!catch mode."""
+
     @classmethod
     def create(cls) -> CatchPerformanceCalculator:
         native_calc = bindings.NativeCatchPerformanceCalculator()
@@ -211,6 +237,8 @@ class CatchPerformanceCalculator(PerformanceCalculator):
 
 
 class ManiaPerformanceCalculator(PerformanceCalculator):
+    """Performance calculator for osu!mania mode."""
+
     @classmethod
     def create(cls) -> ManiaPerformanceCalculator:
         native_calc = bindings.NativeManiaPerformanceCalculator()
@@ -257,6 +285,17 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
 
 
 def create_performance_calculator(ruleset: Ruleset) -> PerformanceCalculator:
+    """Create a performance calculator for the specified ruleset.
+
+    Args:
+        ruleset: The ruleset to create a calculator for.
+
+    Returns:
+        A performance calculator appropriate for the ruleset.
+
+    Raises:
+        ValueError: If the ruleset ID is not supported (must be 0-3).
+    """
     ruleset_id = ruleset.ruleset_id
 
     if ruleset_id == 0:

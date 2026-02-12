@@ -8,6 +8,11 @@ from .base import PerformanceAttributes
 
 @dataclass
 class CatchPerformanceAttributes(PerformanceAttributes):
+    """Performance attributes for osu!catch mode.
+
+    This class currently has no additional attributes beyond the base class.
+    """
+
     @classmethod
     def from_native(cls, native: NativeCatchPerformanceAttributes) -> CatchPerformanceAttributes:
         return cls(total=native.total)

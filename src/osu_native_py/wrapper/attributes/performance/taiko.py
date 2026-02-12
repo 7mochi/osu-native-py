@@ -9,6 +9,14 @@ from .base import PerformanceAttributes
 
 @dataclass
 class TaikoPerformanceAttributes(PerformanceAttributes):
+    """Performance attributes for osu!taiko mode.
+
+    Attributes:
+        difficulty: The difficulty portion of the final performance points.
+        accuracy: The accuracy portion of the final performance points.
+        estimated_unstable_rate: Approximated unstable rate. None if not available.
+    """
+
     difficulty: float
     accuracy: float
     estimated_unstable_rate: Optional[float]

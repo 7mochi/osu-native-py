@@ -9,6 +9,13 @@ from ..utils.native_handler import NativeHandler
 
 
 class Ruleset(NativeHandler):
+    """Represents an osu! ruleset.
+
+    Required when creating difficulty calculators and calculating performance.
+    Specifies which ruleset to use: osu!standard (0), osu!taiko (1), osu!catch (2),
+    or osu!mania (3).
+    """
+
     _RULESET_SHORT_NAME_BY_ID: Dict[int, str] = {0: "osu", 1: "taiko", 2: "catch", 3: "mania"}
 
     def __init__(self, native_ruleset: NativeRuleset):
@@ -16,6 +23,17 @@ class Ruleset(NativeHandler):
 
     @classmethod
     def from_id(cls, ruleset_id: int) -> Ruleset:
+        """Create a ruleset from its numeric ID.
+
+        Args:
+            ruleset_id: The ruleset ID (0=osu, 1=taiko, 2=catch, 3=mania).
+
+        Returns:
+            A new Ruleset instance.
+
+        Raises:
+            RuntimeError: If the ruleset creation fails or the ID is invalid.
+        """
         native_ruleset = bindings.NativeRuleset()
 
         result = bindings.Ruleset_CreateFromId(ruleset_id, byref(native_ruleset))
@@ -25,11 +43,27 @@ class Ruleset(NativeHandler):
 
     @property
     def ruleset_id(self) -> int:
+        """The numeric ID of the ruleset.
+
+        Returns:
+            0 for osu!standard, 1 for taiko, 2 for catch, 3 for mania.
+
+        Raises:
+            RuntimeError: If the ruleset is already closed.
+        """
         self._check_not_closed()
         return self._native.rulesetId
 
     @property
     def short_name(self) -> str:
+        """The short name of the ruleset.
+
+        Returns:
+            "osu", "taiko", "catch", or "mania". Returns "unknown(id)" for invalid IDs.
+
+        Raises:
+            RuntimeError: If the ruleset is already closed.
+        """
         self._check_not_closed()
         return self._RULESET_SHORT_NAME_BY_ID.get(self.ruleset_id, f"unknown({self.ruleset_id})")
 

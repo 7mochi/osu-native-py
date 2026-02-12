@@ -10,6 +10,25 @@ from ...native import bindings
 
 @dataclass
 class ScoreInfo:
+    """Information about a score for performance calculation.
+
+    Contains the essential score statistics needed to calculate performance points:
+    combo, accuracy, hit counts, and optionally the legacy total score.
+
+    Attributes:
+        max_combo: The maximum combo achieved in the score.
+        accuracy: The accuracy of the score (0.0 to 1.0).
+        count_miss: Number of misses.
+        count_meh: Number of 50s (meh hits).
+        count_ok: Number of 100s (ok hits).
+        count_good: Number of 200s (good hits, mania only).
+        count_great: Number of 300s (great hits).
+        count_perfect: Number of perfect hits (mania only).
+        count_slider_tail_hit: Number of slider tails hit.
+        count_large_tick_miss: Number of large tick misses.
+        legacy_total_score: The legacy total score, if available.
+    """
+
     max_combo: int = 0
     accuracy: float = 1.0
     count_miss: int = 0
