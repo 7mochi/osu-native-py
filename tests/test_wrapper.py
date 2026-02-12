@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from osu_native_py.wrapper.objects import Beatmap
-from osu_native_py.wrapper.objects import ErrorCode
 from osu_native_py.wrapper.objects import Mod
 from osu_native_py.wrapper.objects import ModsCollection
 from osu_native_py.wrapper.objects import Ruleset

@@ -1,15 +1,11 @@
 from __future__ import annotations
 
-from ctypes import POINTER
 from ctypes import byref
 from ctypes import c_int32
 from ctypes import c_uint8
-from ctypes import create_string_buffer
 from typing import Callable
-from typing import Optional
 
 from ...native import ManagedObjectHandle
-from ...native import bindings
 from ..objects.error_code import ErrorCode
 
 

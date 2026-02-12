@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from typing import Optional
 
 from ....native import NativeTaikoPerformanceAttributes
-from ....native import bindings
 from .base import PerformanceAttributes
 
 

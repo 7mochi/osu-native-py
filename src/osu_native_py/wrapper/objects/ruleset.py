@@ -3,7 +3,6 @@ from __future__ import annotations
 from ctypes import byref
 from typing import Dict
 
-from ...native import ManagedObjectHandle
 from ...native import NativeRuleset
 from ...native import bindings
 from ..utils.native_handler import NativeHandler

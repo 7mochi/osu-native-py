@@ -17,7 +17,6 @@ from ..attributes.performance import OsuPerformanceAttributes
 from ..attributes.performance import PerformanceAttributes
 from ..attributes.performance import TaikoPerformanceAttributes
 from ..objects import Beatmap
-from ..objects import ErrorCode
 from ..objects import ModsCollection
 from ..objects import Ruleset
 from ..objects import ScoreInfo

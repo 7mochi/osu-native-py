@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ....native import NativeTaikoDifficultyAttributes
-from ....native import bindings
 from .base import DifficultyAttributes
 
 
