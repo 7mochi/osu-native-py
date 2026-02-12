@@ -13,26 +13,13 @@ from ..attributes.difficulty import OsuDifficultyAttributes
 from ..attributes.difficulty import TaikoDifficultyAttributes
 from ..objects import Beatmap
 from ..objects import ModsCollection
-from ..objects import NativeHelper
 from ..objects import Ruleset
+from ..objects.native_handler import NativeHandler
 
 
-class DifficultyCalculator(ABC):
+class DifficultyCalculator(NativeHandler, ABC):
     def __init__(self, handle: ManagedObjectHandle):
-        self._handle = handle
-        self._closed = False
-
-    @property
-    def handle(self):
-        return self._handle
-
-    @property
-    def is_closed(self) -> bool:
-        return self._closed
-
-    def _check_not_closed(self) -> None:
-        if self._closed:
-            raise RuntimeError(f"{self.__class__.__name__} has been closed")
+        super().__init__(handle)
 
     @abstractmethod
     def calculate(self, mods: ModsCollection) -> DifficultyAttributes:
@@ -41,16 +28,6 @@ class DifficultyCalculator(ABC):
     @abstractmethod
     def close(self) -> None:
         pass
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        self.close()
-
-    def __del__(self) -> None:
-        if not self._closed:
-            self.close()
 
 
 class OsuDifficultyCalculator(DifficultyCalculator):
@@ -62,7 +39,7 @@ class OsuDifficultyCalculator(DifficultyCalculator):
             beatmap.handle,
             byref(native_calc),
         )
-        NativeHelper.check_error(result, "create OsuDifficultyCalculator")
+        cls.check_error(result, "create OsuDifficultyCalculator")
         return cls(native_calc.handle)
 
     def calculate(self, mods: ModsCollection) -> OsuDifficultyAttributes:
@@ -74,7 +51,7 @@ class OsuDifficultyCalculator(DifficultyCalculator):
             mods.handle,
             byref(native_diff),
         )
-        NativeHelper.check_error(result, "calculate osu! difficulty")
+        self.check_error(result, "calculate osu! difficulty")
 
         return OsuDifficultyAttributes.from_native(native_diff)
 
@@ -93,7 +70,7 @@ class TaikoDifficultyCalculator(DifficultyCalculator):
             beatmap.handle,
             byref(native_calc),
         )
-        NativeHelper.check_error(result, "create TaikoDifficultyCalculator")
+        cls.check_error(result, "create TaikoDifficultyCalculator")
         return cls(native_calc.handle)
 
     def calculate(self, mods: ModsCollection) -> TaikoDifficultyAttributes:
@@ -105,7 +82,7 @@ class TaikoDifficultyCalculator(DifficultyCalculator):
             mods.handle,
             byref(native_diff),
         )
-        NativeHelper.check_error(result, "calculate Taiko difficulty")
+        self.check_error(result, "calculate Taiko difficulty")
 
         return TaikoDifficultyAttributes.from_native(native_diff)
 
@@ -124,7 +101,7 @@ class CatchDifficultyCalculator(DifficultyCalculator):
             beatmap.handle,
             byref(native_calc),
         )
-        NativeHelper.check_error(result, "create CatchDifficultyCalculator")
+        cls.check_error(result, "create CatchDifficultyCalculator")
         return cls(native_calc.handle)
 
     def calculate(self, mods: ModsCollection) -> CatchDifficultyAttributes:
@@ -136,7 +113,7 @@ class CatchDifficultyCalculator(DifficultyCalculator):
             mods.handle,
             byref(native_diff),
         )
-        NativeHelper.check_error(result, "calculate Catch difficulty")
+        self.check_error(result, "calculate Catch difficulty")
 
         return CatchDifficultyAttributes.from_native(native_diff)
 
@@ -155,7 +132,7 @@ class ManiaDifficultyCalculator(DifficultyCalculator):
             beatmap.handle,
             byref(native_calc),
         )
-        NativeHelper.check_error(result, "create ManiaDifficultyCalculator")
+        cls.check_error(result, "create ManiaDifficultyCalculator")
         return cls(native_calc.handle)
 
     def calculate(self, mods: ModsCollection) -> ManiaDifficultyAttributes:
@@ -167,7 +144,7 @@ class ManiaDifficultyCalculator(DifficultyCalculator):
             mods.handle,
             byref(native_diff),
         )
-        NativeHelper.check_error(result, "calculate Mania difficulty")
+        self.check_error(result, "calculate Mania difficulty")
 
         return ManiaDifficultyAttributes.from_native(native_diff)
 

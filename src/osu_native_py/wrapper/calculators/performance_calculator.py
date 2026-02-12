@@ -4,6 +4,8 @@ from abc import ABC
 from abc import abstractmethod
 from ctypes import byref
 
+from osu_native_py.wrapper.objects.native_handler import NativeHandler
+
 from ...native import ManagedObjectHandle
 from ...native import bindings
 from ..attributes.difficulty import CatchDifficultyAttributes
@@ -24,22 +26,9 @@ from ..objects import Ruleset
 from ..objects import ScoreInfo
 
 
-class PerformanceCalculator(ABC):
+class PerformanceCalculator(NativeHandler, ABC):
     def __init__(self, handle: ManagedObjectHandle):
-        self._handle = handle
-        self._closed = False
-
-    @property
-    def handle(self):
-        return self._handle
-
-    @property
-    def is_closed(self) -> bool:
-        return self._closed
-
-    def _check_not_closed(self) -> None:
-        if self._closed:
-            raise RuntimeError(f"{self.__class__.__name__} has been closed")
+        super().__init__(handle)
 
     @abstractmethod
     def calculate(
@@ -56,23 +45,13 @@ class PerformanceCalculator(ABC):
     def close(self) -> None:
         pass
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        self.close()
-
-    def __del__(self) -> None:
-        if not self._closed:
-            self.close()
-
 
 class OsuPerformanceCalculator(PerformanceCalculator):
     @classmethod
     def create(cls) -> OsuPerformanceCalculator:
         native_calc = bindings.NativeOsuPerformanceCalculator()
         result = bindings.OsuPerformanceCalculator_Create(byref(native_calc))
-        NativeHelper.check_error(result, "create OsuPerformanceCalculator")
+        cls.check_error(result, "create OsuPerformanceCalculator")
         return cls(native_calc.handle)
 
     def calculate(
@@ -124,7 +103,7 @@ class OsuPerformanceCalculator(PerformanceCalculator):
             native_diff,
             byref(native_perf),
         )
-        NativeHelper.check_error(result, "calculate osu! performance")
+        self.check_error(result, "calculate osu! performance")
 
         return OsuPerformanceAttributes.from_native(native_perf)
 
@@ -139,7 +118,7 @@ class TaikoPerformanceCalculator(PerformanceCalculator):
     def create(cls) -> TaikoPerformanceCalculator:
         native_calc = bindings.NativeTaikoPerformanceCalculator()
         result = bindings.TaikoPerformanceCalculator_Create(byref(native_calc))
-        NativeHelper.check_error(result, "create TaikoPerformanceCalculator")
+        cls.check_error(result, "create TaikoPerformanceCalculator")
         return cls(native_calc.handle)
 
     def calculate(
@@ -178,7 +157,7 @@ class TaikoPerformanceCalculator(PerformanceCalculator):
             native_diff,
             byref(native_perf),
         )
-        NativeHelper.check_error(result, "calculate Taiko performance")
+        self.check_error(result, "calculate Taiko performance")
 
         return TaikoPerformanceAttributes.from_native(native_perf)
 
@@ -193,7 +172,7 @@ class CatchPerformanceCalculator(PerformanceCalculator):
     def create(cls) -> CatchPerformanceCalculator:
         native_calc = bindings.NativeCatchPerformanceCalculator()
         result = bindings.CatchPerformanceCalculator_Create(byref(native_calc))
-        NativeHelper.check_error(result, "create CatchPerformanceCalculator")
+        cls.check_error(result, "create CatchPerformanceCalculator")
         return cls(native_calc.handle)
 
     def calculate(
@@ -224,7 +203,7 @@ class CatchPerformanceCalculator(PerformanceCalculator):
             native_diff,
             byref(native_perf),
         )
-        NativeHelper.check_error(result, "calculate Catch performance")
+        self.check_error(result, "calculate Catch performance")
 
         return CatchPerformanceAttributes.from_native(native_perf)
 
@@ -239,7 +218,7 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
     def create(cls) -> ManiaPerformanceCalculator:
         native_calc = bindings.NativeManiaPerformanceCalculator()
         result = bindings.ManiaPerformanceCalculator_Create(byref(native_calc))
-        NativeHelper.check_error(result, "create ManiaPerformanceCalculator")
+        cls.check_error(result, "create ManiaPerformanceCalculator")
         return cls(native_calc.handle)
 
     def calculate(
@@ -270,7 +249,7 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
             native_diff,
             byref(native_perf),
         )
-        NativeHelper.check_error(result, "calculate Mania performance")
+        self.check_error(result, "calculate Mania performance")
 
         return ManiaPerformanceAttributes.from_native(native_perf)
 
