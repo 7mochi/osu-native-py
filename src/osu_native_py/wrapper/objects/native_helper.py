@@ -1,7 +1,3 @@
-"""
-Utilidades helper para trabajar con funciones nativas.
-"""
-
 from __future__ import annotations
 
 from ctypes import POINTER

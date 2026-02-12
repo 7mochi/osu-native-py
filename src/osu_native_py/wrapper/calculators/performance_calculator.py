@@ -229,7 +229,6 @@ class CatchPerformanceCalculator(PerformanceCalculator):
         return CatchPerformanceAttributes.from_native(native_perf)
 
     def close(self) -> None:
-        """Libera los recursos del calculador."""
         if not self._closed:
             bindings.CatchPerformanceCalculator_Destroy(self.handle)
             self._closed = True
@@ -276,7 +275,6 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
         return ManiaPerformanceAttributes.from_native(native_perf)
 
     def close(self) -> None:
-        """Libera los recursos del calculador."""
         if not self._closed:
             bindings.ManiaPerformanceCalculator_Destroy(self.handle)
             self._closed = True
