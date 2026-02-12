@@ -3,8 +3,12 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from ctypes import byref
+from typing import Union
 
-from ...native import ManagedObjectHandle
+from ...native import NativeCatchDifficultyCalculator
+from ...native import NativeManiaDifficultyCalculator
+from ...native import NativeOsuDifficultyCalculator
+from ...native import NativeTaikoDifficultyCalculator
 from ...native import bindings
 from ..attributes.difficulty import CatchDifficultyAttributes
 from ..attributes.difficulty import DifficultyAttributes
@@ -24,7 +28,15 @@ class DifficultyCalculator(NativeHandler, ABC):
     This is an abstract base class that must be subclassed for each game mode.
     """
 
-    def __init__(self, handle: ManagedObjectHandle):
+    def __init__(
+        self,
+        handle: Union[
+            NativeOsuDifficultyCalculator,
+            NativeTaikoDifficultyCalculator,
+            NativeCatchDifficultyCalculator,
+            NativeManiaDifficultyCalculator,
+        ],
+    ):
         super().__init__(handle)
 
     @abstractmethod
@@ -36,13 +48,6 @@ class DifficultyCalculator(NativeHandler, ABC):
 
         Returns:
             A structure describing the difficulty of the beatmap.
-        """
-
-    @abstractmethod
-    def close(self) -> None:
-        """Release native resources.
-
-        Must be called when the calculator is no longer needed.
         """
 
 
@@ -58,7 +63,7 @@ class OsuDifficultyCalculator(DifficultyCalculator):
             byref(native_calc),
         )
         cls.check_error(result, "create OsuDifficultyCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(self, mods: ModsCollection) -> OsuDifficultyAttributes:
         self._check_not_closed()
@@ -73,10 +78,8 @@ class OsuDifficultyCalculator(DifficultyCalculator):
 
         return OsuDifficultyAttributes.from_native(native_diff)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.OsuDifficultyCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.OsuDifficultyCalculator_Destroy(self.handle)
 
 
 class TaikoDifficultyCalculator(DifficultyCalculator):
@@ -91,7 +94,7 @@ class TaikoDifficultyCalculator(DifficultyCalculator):
             byref(native_calc),
         )
         cls.check_error(result, "create TaikoDifficultyCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(self, mods: ModsCollection) -> TaikoDifficultyAttributes:
         self._check_not_closed()
@@ -106,10 +109,8 @@ class TaikoDifficultyCalculator(DifficultyCalculator):
 
         return TaikoDifficultyAttributes.from_native(native_diff)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.TaikoDifficultyCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.TaikoDifficultyCalculator_Destroy(self.handle)
 
 
 class CatchDifficultyCalculator(DifficultyCalculator):
@@ -124,7 +125,7 @@ class CatchDifficultyCalculator(DifficultyCalculator):
             byref(native_calc),
         )
         cls.check_error(result, "create CatchDifficultyCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(self, mods: ModsCollection) -> CatchDifficultyAttributes:
         self._check_not_closed()
@@ -139,10 +140,8 @@ class CatchDifficultyCalculator(DifficultyCalculator):
 
         return CatchDifficultyAttributes.from_native(native_diff)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.CatchDifficultyCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.CatchDifficultyCalculator_Destroy(self.handle)
 
 
 class ManiaDifficultyCalculator(DifficultyCalculator):
@@ -157,7 +156,7 @@ class ManiaDifficultyCalculator(DifficultyCalculator):
             byref(native_calc),
         )
         cls.check_error(result, "create ManiaDifficultyCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(self, mods: ModsCollection) -> ManiaDifficultyAttributes:
         self._check_not_closed()
@@ -172,10 +171,8 @@ class ManiaDifficultyCalculator(DifficultyCalculator):
 
         return ManiaDifficultyAttributes.from_native(native_diff)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.ManiaDifficultyCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.ManiaDifficultyCalculator_Destroy(self.handle)
 
 
 def create_difficulty_calculator(ruleset: Ruleset, beatmap: Beatmap) -> DifficultyCalculator:

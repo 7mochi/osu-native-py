@@ -3,8 +3,12 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from ctypes import byref
+from typing import Union
 
-from ...native import ManagedObjectHandle
+from ...native import NativeCatchPerformanceCalculator
+from ...native import NativeManiaPerformanceCalculator
+from ...native import NativeOsuPerformanceCalculator
+from ...native import NativeTaikoPerformanceCalculator
 from ...native import bindings
 from ..attributes.difficulty import CatchDifficultyAttributes
 from ..attributes.difficulty import DifficultyAttributes
@@ -30,7 +34,15 @@ class PerformanceCalculator(NativeHandler, ABC):
     This is an abstract base class that must be subclassed for each game mode.
     """
 
-    def __init__(self, handle: ManagedObjectHandle):
+    def __init__(
+        self,
+        handle: Union[
+            NativeOsuPerformanceCalculator,
+            NativeTaikoPerformanceCalculator,
+            NativeCatchPerformanceCalculator,
+            NativeManiaPerformanceCalculator,
+        ],
+    ):
         super().__init__(handle)
 
     @abstractmethod
@@ -55,13 +67,6 @@ class PerformanceCalculator(NativeHandler, ABC):
             A structure describing the performance of the score.
         """
 
-    @abstractmethod
-    def close(self) -> None:
-        """Release native resources.
-
-        Must be called when the calculator is no longer needed.
-        """
-
 
 class OsuPerformanceCalculator(PerformanceCalculator):
     """Performance calculator for osu!standard mode."""
@@ -71,7 +76,7 @@ class OsuPerformanceCalculator(PerformanceCalculator):
         native_calc = bindings.NativeOsuPerformanceCalculator()
         result = bindings.OsuPerformanceCalculator_Create(byref(native_calc))
         cls.check_error(result, "create OsuPerformanceCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(
         self,
@@ -126,10 +131,8 @@ class OsuPerformanceCalculator(PerformanceCalculator):
 
         return OsuPerformanceAttributes.from_native(native_perf)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.OsuPerformanceCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.OsuPerformanceCalculator_Destroy(self.handle)
 
 
 class TaikoPerformanceCalculator(PerformanceCalculator):
@@ -140,7 +143,7 @@ class TaikoPerformanceCalculator(PerformanceCalculator):
         native_calc = bindings.NativeTaikoPerformanceCalculator()
         result = bindings.TaikoPerformanceCalculator_Create(byref(native_calc))
         cls.check_error(result, "create TaikoPerformanceCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(
         self,
@@ -182,10 +185,8 @@ class TaikoPerformanceCalculator(PerformanceCalculator):
 
         return TaikoPerformanceAttributes.from_native(native_perf)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.TaikoPerformanceCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.TaikoPerformanceCalculator_Destroy(self.handle)
 
 
 class CatchPerformanceCalculator(PerformanceCalculator):
@@ -196,7 +197,7 @@ class CatchPerformanceCalculator(PerformanceCalculator):
         native_calc = bindings.NativeCatchPerformanceCalculator()
         result = bindings.CatchPerformanceCalculator_Create(byref(native_calc))
         cls.check_error(result, "create CatchPerformanceCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(
         self,
@@ -230,10 +231,8 @@ class CatchPerformanceCalculator(PerformanceCalculator):
 
         return CatchPerformanceAttributes.from_native(native_perf)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.CatchPerformanceCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.CatchPerformanceCalculator_Destroy(self.handle)
 
 
 class ManiaPerformanceCalculator(PerformanceCalculator):
@@ -244,7 +243,7 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
         native_calc = bindings.NativeManiaPerformanceCalculator()
         result = bindings.ManiaPerformanceCalculator_Create(byref(native_calc))
         cls.check_error(result, "create ManiaPerformanceCalculator")
-        return cls(native_calc.handle)
+        return cls(native_calc)
 
     def calculate(
         self,
@@ -278,10 +277,8 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
 
         return ManiaPerformanceAttributes.from_native(native_perf)
 
-    def close(self) -> None:
-        if not self._closed:
-            bindings.ManiaPerformanceCalculator_Destroy(self.handle)
-            self._closed = True
+    def _destroy(self) -> None:
+        bindings.ManiaPerformanceCalculator_Destroy(self.handle)
 
 
 def create_performance_calculator(ruleset: Ruleset) -> PerformanceCalculator:

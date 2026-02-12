@@ -66,6 +66,16 @@ NativeTaikoPerformanceAttributes = bindings.NativeTaikoPerformanceAttributes
 NativeCatchPerformanceAttributes = bindings.NativeCatchPerformanceAttributes
 NativeManiaPerformanceAttributes = bindings.NativeManiaPerformanceAttributes
 
+NativeOsuDifficultyCalculator = bindings.NativeOsuDifficultyCalculator
+NativeTaikoDifficultyCalculator = bindings.NativeTaikoDifficultyCalculator
+NativeCatchDifficultyCalculator = bindings.NativeCatchDifficultyCalculator
+NativeManiaDifficultyCalculator = bindings.NativeManiaDifficultyCalculator
+
+NativeOsuPerformanceCalculator = bindings.NativeOsuPerformanceCalculator
+NativeTaikoPerformanceCalculator = bindings.NativeTaikoPerformanceCalculator
+NativeCatchPerformanceCalculator = bindings.NativeCatchPerformanceCalculator
+NativeManiaPerformanceCalculator = bindings.NativeManiaPerformanceCalculator
+
 __all__ = [
     "LIB_NAME",
     "PLATFORM_DIR",
@@ -85,4 +95,12 @@ __all__ = [
     "NativeTaikoPerformanceAttributes",
     "NativeCatchPerformanceAttributes",
     "NativeManiaPerformanceAttributes",
+    "NativeOsuDifficultyCalculator",
+    "NativeTaikoDifficultyCalculator",
+    "NativeCatchDifficultyCalculator",
+    "NativeManiaDifficultyCalculator",
+    "NativeOsuPerformanceCalculator",
+    "NativeTaikoPerformanceCalculator",
+    "NativeCatchPerformanceCalculator",
+    "NativeManiaPerformanceCalculator",
 ]
