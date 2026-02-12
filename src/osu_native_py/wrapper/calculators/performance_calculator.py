@@ -4,8 +4,6 @@ from abc import ABC
 from abc import abstractmethod
 from ctypes import byref
 
-from osu_native_py.wrapper.objects.native_handler import NativeHandler
-
 from ...native import ManagedObjectHandle
 from ...native import bindings
 from ..attributes.difficulty import CatchDifficultyAttributes
@@ -21,9 +19,9 @@ from ..attributes.performance import TaikoPerformanceAttributes
 from ..objects import Beatmap
 from ..objects import ErrorCode
 from ..objects import ModsCollection
-from ..objects import NativeHelper
 from ..objects import Ruleset
 from ..objects import ScoreInfo
+from ..utils.native_handler import NativeHandler
 
 
 class PerformanceCalculator(NativeHandler, ABC):

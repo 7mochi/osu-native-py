@@ -9,7 +9,7 @@ from typing import Any
 from typing import Callable
 
 from ...native import ManagedObjectHandle
-from .error_code import ErrorCode
+from ..objects.error_code import ErrorCode
 
 
 class NativeHandler(ABC):

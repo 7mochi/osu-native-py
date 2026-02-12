@@ -6,8 +6,8 @@ from typing import Optional
 from ...native import ManagedObjectHandle
 from ...native import NativeBeatmap
 from ...native import bindings
+from ..utils.native_handler import NativeHandler
 from .error_code import ErrorCode
-from .native_handler import NativeHandler
 
 
 class Beatmap(NativeHandler):

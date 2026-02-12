@@ -6,7 +6,7 @@ from typing import Dict
 from ...native import ManagedObjectHandle
 from ...native import NativeRuleset
 from ...native import bindings
-from .native_handler import NativeHandler
+from ..utils.native_handler import NativeHandler
 
 
 class Ruleset(NativeHandler):

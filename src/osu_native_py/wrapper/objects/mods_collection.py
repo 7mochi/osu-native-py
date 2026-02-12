@@ -6,9 +6,9 @@ from typing import List
 from ...native import ManagedObjectHandle
 from ...native import NativeModsCollection
 from ...native import bindings
+from ..utils.native_handler import NativeHandler
 from .error_code import ErrorCode
 from .mod import Mod
-from .native_handler import NativeHandler
 
 
 class ModsCollection(NativeHandler):

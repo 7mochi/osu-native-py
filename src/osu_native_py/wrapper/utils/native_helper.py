@@ -10,7 +10,7 @@ from typing import Optional
 
 from ...native import ManagedObjectHandle
 from ...native import bindings
-from .error_code import ErrorCode
+from ..objects.error_code import ErrorCode
 
 
 class NativeHelper:

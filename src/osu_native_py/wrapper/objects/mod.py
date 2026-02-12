@@ -5,8 +5,8 @@ from ctypes import byref
 from ...native import ManagedObjectHandle
 from ...native import NativeMod
 from ...native import bindings
+from ..utils.native_handler import NativeHandler
 from .error_code import ErrorCode
-from .native_handler import NativeHandler
 
 
 class Mod(NativeHandler):

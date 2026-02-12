@@ -14,7 +14,7 @@ from ..attributes.difficulty import TaikoDifficultyAttributes
 from ..objects import Beatmap
 from ..objects import ModsCollection
 from ..objects import Ruleset
-from ..objects.native_handler import NativeHandler
+from ..utils.native_handler import NativeHandler
 
 
 class DifficultyCalculator(NativeHandler, ABC):
