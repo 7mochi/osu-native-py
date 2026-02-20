@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "osu-native-py"
-version = "0.0.1"
+version = "0.0.2"
 description = "A Python wrapper for the osu! native library, providing high-level interfaces for beatmap parsing, mod application, and difficulty/performance calculations."
 authors = ["7mochi <flyingcatdm@gmail.com>"]
 license = "MIT"
