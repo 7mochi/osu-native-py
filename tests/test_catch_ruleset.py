@@ -17,19 +17,17 @@ TEST_DIR = Path(__file__).parent
 BEATMAP_PATH = TEST_DIR / "resources/4289411.osu"
 
 
-@pytest.mark.skip(
-    reason=" Disabled for now because there is a bug on the osu-native side that causes incorrect pp calculation",
-)
 def test_standard_ruleset():
     beatmap = Beatmap.from_file(str(BEATMAP_PATH))
     ruleset = Ruleset.from_id(2)
     mods = ModsCollection.create()
 
     score = ScoreInfo(
-        # TODO: attributes for catch calculation are missing in osu-native
-        # accuracy=1.0,
-        # max_combo=453,
-        # count_great=453
+        accuracy=1.0,
+        max_combo=1909,
+        count_great=1836,
+        count_large_tick_hit=73,
+        count_small_tick_hit=86,
     )
 
     diff_calc = create_difficulty_calculator(ruleset, beatmap)
@@ -43,4 +41,4 @@ def test_standard_ruleset():
         assert diff_attrs.max_combo == 1909
 
     if isinstance(perf_attrs, CatchPerformanceAttributes):
-        assert perf_attrs.total == pytest.approx(853)
+        assert perf_attrs.total == pytest.approx(852.7183421110947)

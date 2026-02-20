@@ -18,14 +18,17 @@ class ScoreInfo:
     Attributes:
         max_combo: The maximum combo achieved in the score.
         accuracy: The accuracy of the score (0.0 to 1.0).
-        count_miss: Number of misses.
-        count_meh: Number of 50s (meh hits).
-        count_ok: Number of 100s (ok hits).
-        count_good: Number of 200s (good hits, mania only).
-        count_great: Number of 300s (great hits).
-        count_perfect: Number of perfect hits (mania only).
-        count_slider_tail_hit: Number of slider tails hit.
-        count_large_tick_miss: Number of large tick misses.
+        count_miss: Number of misses. (osu!standard, osu!taiko, osu!mania)
+        count_meh: Number of 50s (meh hits). (osu!standard, osu!taiko, osu!mania)
+        count_ok: Number of 100s (ok hits). (osu!standard, osu!taiko, osu!mania)
+        count_good: Number of 200s (good hits, osu!mania only)
+        count_great: Number of 300s (great hits). (osu!standard, osu!taiko, osu!catch, osu!mania)
+        count_perfect: Number of perfect hits (osu!mania only)
+        count_small_tick_miss: Number of small tick misses. (osu!catch only)
+        count_small_tick_hit: Number of small tick hits. (osu!catch only)
+        count_large_tick_miss: Number of large tick misses. (osu!standard, osu!catch)
+        count_large_tick_hit: Number of large tick hits. (osu!catch only)
+        count_slider_tail_hit: Number of slider tails hit. (osu!standard only)
         legacy_total_score: The legacy total score, if available.
     """
 
@@ -37,8 +40,11 @@ class ScoreInfo:
     count_good: int = 0
     count_great: int = 0
     count_perfect: int = 0
-    count_slider_tail_hit: int = 0
+    count_small_tick_miss: int = 0
+    count_small_tick_hit: int = 0
     count_large_tick_miss: int = 0
+    count_large_tick_hit: int = 0
+    count_slider_tail_hit: int = 0
     legacy_total_score: Optional[int] = None
 
     def to_native(
@@ -67,7 +73,10 @@ class ScoreInfo:
         native_score.countGood = self.count_good
         native_score.countGreat = self.count_great
         native_score.countPerfect = self.count_perfect
-        native_score.countSliderTailHit = self.count_slider_tail_hit
+        native_score.countSmallTickMiss = self.count_small_tick_miss
+        native_score.countSmallTickHit = self.count_small_tick_hit
         native_score.countLargeTickMiss = self.count_large_tick_miss
+        native_score.countLargeTickHit = self.count_large_tick_hit
+        native_score.countSliderTailHit = self.count_slider_tail_hit
 
         return native_score
