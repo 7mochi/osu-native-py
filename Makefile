@@ -35,7 +35,6 @@ all: build-osu-native fix-cabinet-header copy-native install generate-bindings
 
 build-osu-native:
 	dotnet publish osu-native/osu.Native -c Release -r $(PLATFORM) -o $(OUTPUT_DIR)/generated
-	cp $(BUILD_DIR)/cabinet.h $(OUTPUT_DIR)/generated/cabinet.h
 
 fix-cabinet-header:
 	poetry run python scripts/fix_cabinet_header.py
