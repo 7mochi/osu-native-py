@@ -41,3 +41,7 @@ dmypy.json
 poetry.lock
 src/osu_native_py/native/bindings.py
 src/osu_native_py/native/bin/
+
+# Nix / direnv
+.direnv/
+result
