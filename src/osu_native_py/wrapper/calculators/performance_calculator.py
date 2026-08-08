@@ -103,6 +103,7 @@ class OsuPerformanceCalculator(PerformanceCalculator):
         native_diff.speedDifficulty = difficulty_attributes.speed_difficulty
         native_diff.speedNoteCount = difficulty_attributes.speed_note_count
         native_diff.flashlightDifficulty = difficulty_attributes.flashlight_difficulty
+        native_diff.readingDifficulty = difficulty_attributes.reading_difficulty
         native_diff.sliderFactor = difficulty_attributes.slider_factor
         native_diff.aimTopWeightedSliderFactor = (
             difficulty_attributes.aim_top_weighted_slider_factor
@@ -112,10 +113,10 @@ class OsuPerformanceCalculator(PerformanceCalculator):
         )
         native_diff.aimDifficultStrainCount = difficulty_attributes.aim_difficult_strain_count
         native_diff.speedDifficultStrainCount = difficulty_attributes.speed_difficult_strain_count
+        native_diff.readingDifficultNoteCount = difficulty_attributes.reading_difficult_note_count
         native_diff.nestedScorePerObject = difficulty_attributes.nested_score_per_object
         native_diff.legacyScoreBaseMultiplier = difficulty_attributes.legacy_score_base_multiplier
         native_diff.maximumLegacyComboScore = difficulty_attributes.maximum_legacy_combo_score
-        native_diff.drainRate = difficulty_attributes.drain_rate
         native_diff.hitCircleCount = difficulty_attributes.hit_circle_count
         native_diff.sliderCount = difficulty_attributes.slider_count
         native_diff.spinnerCount = difficulty_attributes.spinner_count

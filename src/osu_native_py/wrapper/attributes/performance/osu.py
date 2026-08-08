@@ -16,6 +16,7 @@ class OsuPerformanceAttributes(PerformanceAttributes):
         speed: The speed portion of the final performance points.
         accuracy: The accuracy portion of the final performance points.
         flashlight: The flashlight portion of the final performance points.
+        reading: The reading portion of the final performance points.
         effective_miss_count: Misses including an approximated amount of
             slider breaks.
         speed_deviation: Approximated unstable rate. None if not available.
@@ -33,6 +34,7 @@ class OsuPerformanceAttributes(PerformanceAttributes):
     speed: float
     accuracy: float
     flashlight: float
+    reading: float
     effective_miss_count: float
     speed_deviation: Optional[float]
     combo_based_estimated_miss_count: float
@@ -48,6 +50,7 @@ class OsuPerformanceAttributes(PerformanceAttributes):
             speed=native.speed,
             accuracy=native.accuracy,
             flashlight=native.flashlight,
+            reading=native.reading,
             effective_miss_count=native.effectiveMissCount,
             speed_deviation=native.speedDeviation.value if native.speedDeviation.hasValue else None,
             combo_based_estimated_miss_count=native.comboBasedEstimatedMissCount,

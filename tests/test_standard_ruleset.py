@@ -36,29 +36,32 @@ def test_standard_ruleset():
     perf_attrs = perf_calc.calculate(ruleset, beatmap, mods, score, diff_attrs)
 
     if isinstance(diff_attrs, OsuDifficultyAttributes):
-        assert diff_attrs.star_rating == pytest.approx(7.765762362059099)
+        assert diff_attrs.star_rating == pytest.approx(7.498739590295447)
         assert diff_attrs.max_combo == 183
-        assert diff_attrs.aim_difficulty == pytest.approx(4.3682123359710925)
-        assert diff_attrs.aim_difficult_slider_count == pytest.approx(22.686766833130047)
-        assert diff_attrs.speed_difficulty == pytest.approx(2.8560898921433444)
-        assert diff_attrs.speed_note_count == pytest.approx(113.75894687178317)
-        assert diff_attrs.slider_factor == pytest.approx(0.9943922184830679)
-        assert diff_attrs.aim_top_weighted_slider_factor == pytest.approx(0.3840426059241585)
-        assert diff_attrs.speed_top_weighted_slider_factor == pytest.approx(0.4713024554831769)
-        assert diff_attrs.aim_difficult_strain_count == pytest.approx(46.199831564028564)
-        assert diff_attrs.speed_difficult_strain_count == pytest.approx(60.800851497024794)
+        assert diff_attrs.aim_difficulty == pytest.approx(4.357329621795068)
+        assert diff_attrs.aim_difficult_slider_count == pytest.approx(30.345999170641857)
+        assert diff_attrs.speed_difficulty == pytest.approx(2.0211429286638367)
+        assert diff_attrs.speed_note_count == pytest.approx(120.07110728462541)
+        assert diff_attrs.reading_difficulty == pytest.approx(1.9730918640558355)
+        assert diff_attrs.slider_factor == pytest.approx(0.9906160459443888)
+        assert diff_attrs.aim_top_weighted_slider_factor == pytest.approx(0.41441635619904416)
+        assert diff_attrs.speed_top_weighted_slider_factor == pytest.approx(0.45254841769401155)
+        assert diff_attrs.aim_difficult_strain_count == pytest.approx(58.35038516550769)
+        assert diff_attrs.speed_difficult_strain_count == pytest.approx(62.04319093927151)
+        assert diff_attrs.reading_difficult_note_count == pytest.approx(37.73907995641551)
         assert diff_attrs.nested_score_per_object == pytest.approx(18.428571428571427)
         assert diff_attrs.legacy_score_base_multiplier == 4
         assert diff_attrs.maximum_legacy_combo_score == 615888
 
     if isinstance(perf_attrs, OsuPerformanceAttributes):
-        assert perf_attrs.aim == pytest.approx(319.18472409411135)
-        assert perf_attrs.total == pytest.approx(563.1769678409995)
-        assert perf_attrs.speed == pytest.approx(87.45481790157747)
-        assert perf_attrs.accuracy == pytest.approx(131.2126708522303)
+        assert perf_attrs.aim == pytest.approx(322.4802177547998)
+        assert perf_attrs.total == pytest.approx(524.5147724726088)
+        assert perf_attrs.speed == pytest.approx(33.02442207926298)
+        assert perf_attrs.accuracy == pytest.approx(124.35910173544602)
         assert perf_attrs.flashlight == pytest.approx(0.0)
+        assert perf_attrs.reading == pytest.approx(30.725708690295477)
         assert perf_attrs.effective_miss_count == pytest.approx(0.0)
-        assert perf_attrs.speed_deviation == pytest.approx(8.46064257633682)
+        assert perf_attrs.speed_deviation == pytest.approx(8.381088084982773)
         assert perf_attrs.combo_based_estimated_miss_count == pytest.approx(0.0)
         assert (
             perf_attrs.score_based_estimated_miss_count is None

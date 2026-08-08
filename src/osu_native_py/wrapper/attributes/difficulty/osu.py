@@ -17,6 +17,7 @@ class OsuDifficultyAttributes(DifficultyAttributes):
         speed_note_count: The number of clickable objects weighted by difficulty.
             Related to speed_difficulty.
         flashlight_difficulty: The difficulty corresponding to the flashlight skill.
+        reading_difficulty: The difficulty corresponding to the reading skill.
         slider_factor: Describes how much of aim_difficulty is contributed by
             hitcircles or sliders. A value closer to 1.0 indicates most of
             aim_difficulty is contributed by hitcircles. A value closer to 0.0
@@ -31,11 +32,10 @@ class OsuDifficultyAttributes(DifficultyAttributes):
             A value closer to infinity indicates most is contributed by sliders.
         aim_difficult_strain_count: The count of difficult aim strains.
         speed_difficult_strain_count: The count of difficult speed strains.
+        reading_difficult_note_count: The count of difficult reading notes.
         nested_score_per_object: The nested score per object.
         legacy_score_base_multiplier: The base multiplier for legacy scoring.
         maximum_legacy_combo_score: The maximum legacy combo score.
-        drain_rate: The beatmap's drain rate. This doesn't scale with
-            rate-adjusting mods.
         hit_circle_count: The number of hitcircles in the beatmap.
         slider_count: The number of sliders in the beatmap.
         spinner_count: The number of spinners in the beatmap.
@@ -46,15 +46,16 @@ class OsuDifficultyAttributes(DifficultyAttributes):
     speed_difficulty: float
     speed_note_count: float
     flashlight_difficulty: float
+    reading_difficulty: float
     slider_factor: float
     aim_top_weighted_slider_factor: float
     speed_top_weighted_slider_factor: float
     aim_difficult_strain_count: float
     speed_difficult_strain_count: float
+    reading_difficult_note_count: float
     nested_score_per_object: float
     legacy_score_base_multiplier: float
     maximum_legacy_combo_score: float
-    drain_rate: float
     hit_circle_count: int
     slider_count: int
     spinner_count: int
@@ -69,15 +70,16 @@ class OsuDifficultyAttributes(DifficultyAttributes):
             speed_difficulty=native.speedDifficulty,
             speed_note_count=native.speedNoteCount,
             flashlight_difficulty=native.flashlightDifficulty,
+            reading_difficulty=native.readingDifficulty,
             slider_factor=native.sliderFactor,
             aim_top_weighted_slider_factor=native.aimTopWeightedSliderFactor,
             speed_top_weighted_slider_factor=native.speedTopWeightedSliderFactor,
             aim_difficult_strain_count=native.aimDifficultStrainCount,
             speed_difficult_strain_count=native.speedDifficultStrainCount,
+            reading_difficult_note_count=native.readingDifficultNoteCount,
             nested_score_per_object=native.nestedScorePerObject,
             legacy_score_base_multiplier=native.legacyScoreBaseMultiplier,
             maximum_legacy_combo_score=native.maximumLegacyComboScore,
-            drain_rate=native.drainRate,
             hit_circle_count=native.hitCircleCount,
             slider_count=native.sliderCount,
             spinner_count=native.spinnerCount,
