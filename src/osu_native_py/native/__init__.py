@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import platform
 import sys
 from pathlib import Path
 
@@ -12,7 +13,13 @@ elif sys.platform == "darwin":
     PLATFORM_DIR = "osx-arm64"
 else:
     LIB_NAME = "osu.Native.so"
-    PLATFORM_DIR = "linux-x64"
+    _machine = platform.machine()
+    if _machine == "aarch64":
+        PLATFORM_DIR = "linux-arm64"
+    elif _machine.startswith("arm"):
+        PLATFORM_DIR = "linux-arm"
+    else:
+        PLATFORM_DIR = "linux-x64"
 
 BIN_DIR = Path(__file__).parent / "bin" / PLATFORM_DIR
 LIB_PATH = BIN_DIR / LIB_NAME

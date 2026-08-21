@@ -8,13 +8,20 @@ ifeq ($(OS),Windows_NT)
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
-        PLATFORM := linux-x64
+        UNAME_M := $(shell uname -m)
+        ifeq ($(UNAME_M),aarch64)
+            PLATFORM := linux-arm64
+        else ifeq ($(UNAME_M),armv7l)
+            PLATFORM := linux-arm
+        else
+            PLATFORM := linux-x64
+        endif
         LIB_EXT := so
         LIB_NAME := osu.Native.so
         SED_INPLACE := sed -i
     endif
     ifeq ($(UNAME_S),Darwin)
-        PLATFORM := osx-x64
+        PLATFORM := osx-arm64
         LIB_EXT := dylib
         LIB_NAME := osu.Native.dylib
         SED_INPLACE := sed -i ''
@@ -52,7 +59,7 @@ generate-bindings:
 		--no-macro-warnings \
 		--no-gnu-types
 	# Replace add_library_search_dirs([]) with code that adds the runtime BIN_DIR
-	sed -i.bak 's|add_library_search_dirs(\[\])|import os, sys; from pathlib import Path; _bin_dir = Path(__file__).parent / "bin" / ("win-x64" if sys.platform == "win32" else "osx-arm64" if sys.platform == "darwin" else "linux-x64"); add_library_search_dirs([str(_bin_dir)])|' $(PY_BINDINGS)
+	sed -i.bak 's|add_library_search_dirs(\[\])|import os, platform, sys; from pathlib import Path; _m = platform.machine(); _bin_dir = Path(__file__).parent / "bin" / ("win-x64" if sys.platform == "win32" else "osx-arm64" if sys.platform == "darwin" else "linux-arm64" if _m == "aarch64" else "linux-arm" if _m.startswith("arm") else "linux-x64"); add_library_search_dirs([str(_bin_dir)])|' $(PY_BINDINGS)
 	rm -f $(PY_BINDINGS).bak
 
 lint:
@@ -73,7 +80,7 @@ build:
 		echo "Native library or bindings not found. Run 'make all' first."; \
 		exit 1; \
 	fi
-	poetry build
+	poetry run python tools/build_all_wheels.py
 
 build-dist: all build
 

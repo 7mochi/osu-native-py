@@ -57,7 +57,7 @@ pip install osu-native-py
 ## Supported Platforms
 
 - **Windows**: x64
-- **Linux**: x64
+- **Linux**: x64, ARM64, ARM
 - **macOS**: ARM64 (Apple Silicon)
 
 ## Thanks to

@@ -1,12 +1,13 @@
-[tool.poetry]
+[project]
 name = "osu-native-py"
 version = "0.1.0"
 description = "A Python wrapper for the osu! native library, providing high-level interfaces for beatmap parsing, mod application, and difficulty/performance calculations."
-authors = ["7mochi <flyingcatdm@gmail.com>"]
-license = "MIT"
 readme = "README.md"
-repository = "https://github.com/7mochi/osu-native-py"
+license = "MIT"
+authors = [{ name = "7mochi", email = "flyingcatdm@gmail.com" }]
 keywords = ["osu", "osu!", "difficulty", "performance", "pp"]
+requires-python = ">=3.8"
+dependencies = []
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -24,17 +25,14 @@ classifiers = [
     "Topic :: Games/Entertainment",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-packages = [{include = "osu_native_py", from = "src"}]
-include = [
-    {path = "src/osu_native_py/native/bin/**/*", format = ["sdist", "wheel"]},
-    {path = "src/osu_native_py/native/bindings.py", format = ["sdist", "wheel"]},
-]
 
-[tool.poetry.dependencies]
-python = ">=3.8"
+[project.urls]
+Repository = "https://github.com/7mochi/osu-native-py"
 
 [tool.poetry.group.dev.dependencies]
+build = "^1.0.0"
 ctypesgen = "^1.1.1"
+hatchling = "^1.21.0"
 isort = "^5.13.0"
 autoflake = "^2.0.0"
 mypy = "^1.0.0"
@@ -85,5 +83,16 @@ exclude_lines = [
 ]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/osu_native_py"]
+exclude = ["*.so", "*.dll", "*.dylib"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/osu_native_py"]
+artifacts = ["*.so", "*.dll", "*.dylib", "bindings.py"]
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "tools/hatch_build.py"
