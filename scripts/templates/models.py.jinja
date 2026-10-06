@@ -1,0 +1,80 @@
+{% macro from_native(model) -%}
+@classmethod
+def from_native(cls, native: bindings.Native{{ model.name }}) -> {{ model.name }}:
+    return cls(
+    {% for field in model.fields %}
+        {{ field.name }}={{ field.value }},
+    {% endfor %}
+    )
+{% endmacro -%}
+
+{% macro to_native(model) -%}
+{% if model.handles %}
+def to_native(
+    self,
+    {% for field in model.handles %}
+    {{ field.name }}: {{ field.annotation }},
+    {% endfor %}
+) -> bindings.Native{{ model.name }}:
+{% else %}
+def to_native(self) -> bindings.Native{{ model.name }}:
+{% endif %}
+    native = bindings.Native{{ model.name }}()
+    {% for field in model.handles %}
+    native.{{ field.native_name }} = {{ field.name }}
+    {% endfor %}
+    {% for field in model.fields %}
+        {% if field.nullable %}
+    native.{{ field.native_name }}.hasValue = self.{{ field.name }} is not None
+    native.{{ field.native_name }}.value = (
+        self.{{ field.name }} if self.{{ field.name }} is not None else {{ field.zero }}
+    )
+        {% else %}
+    native.{{ field.native_name }} = self.{{ field.name }}
+        {% endif %}
+    {% endfor %}
+    return native
+{% endmacro -%}
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Optional
+
+from . import bindings
+
+__all__ = [
+{% for model in models %}
+    "{{ model.name }}",
+{% endfor %}
+]
+{% for model in models %}
+    {% set parent = "(" ~ model.base ~ ")" if model.base else "" %}
+
+
+@dataclass
+class {{ model.name }}{{ parent }}:
+    {% if model.docstring %}
+    {{ model.docstring | python_docstring | indent(4) }}
+        {% if model.own_fields %}
+
+        {% endif %}
+    {% endif %}
+    {% for field in model.own_fields %}
+        {% set default = " = " ~ field.default if field.default is not none else "" %}
+    {{ field.name }}: {{ field.annotation }}{{ default }}
+    {% endfor %}
+    {% if model.converter == "score" %}
+
+    {{ to_native(model) | indent(4) }}
+    {% elif model.converter == "attributes" %}
+
+    {{ from_native(model) | indent(4) }}
+        {% if model.base == "DifficultyAttributes" %}
+
+    {{ to_native(model) | indent(4) }}
+        {% endif %}
+    {% elif not model.own_fields and not model.docstring %}
+    pass
+    {% endif %}
+{% endfor %}

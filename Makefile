@@ -36,31 +36,23 @@ NATIVE_DIR  := $(PACKAGE_DIR)/native
 BIN_DIR     := $(NATIVE_DIR)/bin/$(PLATFORM)
 PY_BINDINGS := $(NATIVE_DIR)/bindings.py
 
-.PHONY: all build-osu-native fix-cabinet-header copy-native generate-bindings build build-dist install test test-cov lint type-check clean shell uninstall
+.PHONY: all build-osu-native copy-native generate-bindings generate-test-cases build build-dist install test test-cov lint type-check clean shell uninstall
 
-all: build-osu-native fix-cabinet-header copy-native install generate-bindings
+all: build-osu-native copy-native install generate-bindings generate-test-cases
 
 build-osu-native:
 	dotnet publish osu-native/osu.Native -c Release -r $(PLATFORM) -o $(OUTPUT_DIR)/generated
-
-fix-cabinet-header:
-	poetry run python scripts/fix_cabinet_header.py
 
 copy-native:
 	mkdir -p $(BIN_DIR)
 	cp $(OUTPUT_DIR)/generated/$(LIB_NAME) $(BIN_DIR)/
 
 generate-bindings:
-	poetry run ctypesgen $(OUTPUT_DIR)/generated/cabinet.h \
-		-l osu.Native \
-		-o $(PY_BINDINGS) \
-		-D "bool=char" \
-		--allow-gnu-c \
-		--no-macro-warnings \
-		--no-gnu-types
-	# Replace add_library_search_dirs([]) with code that adds the runtime BIN_DIR
-	sed -i.bak 's|add_library_search_dirs(\[\])|import os, platform, sys; from pathlib import Path; _m = platform.machine(); _bin_dir = Path(__file__).parent / "bin" / ("win-x64" if sys.platform == "win32" else "osx-arm64" if sys.platform == "darwin" else "linux-arm64" if _m == "aarch64" else "linux-arm" if _m.startswith("arm") else "linux-x64"); add_library_search_dirs([str(_bin_dir)])|' $(PY_BINDINGS)
-	rm -f $(PY_BINDINGS).bak
+	poetry run python scripts/generate_bindings.py --publish $(OUTPUT_DIR)/generated
+
+generate-test-cases:
+	mkdir -p $(OUTPUT_DIR)/generated
+	dotnet run --project osu-native/osu.Native.Tests -c Release -- $(OUTPUT_DIR)/generated
 
 lint:
 	poetry run pre-commit run --all-files

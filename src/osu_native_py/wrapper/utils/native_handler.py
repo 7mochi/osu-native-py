@@ -10,6 +10,7 @@ from typing import Callable
 
 from ...native import ManagedObjectHandle
 from ..objects.error_code import ErrorCode
+from .native_helper import NativeHelper
 
 
 class NativeHandler(ABC):
@@ -36,9 +37,7 @@ class NativeHandler(ABC):
 
     @staticmethod
     def check_error(result: int, operation: str) -> None:
-        error_code = ErrorCode.from_value(result)
-        if not error_code.is_success():
-            raise RuntimeError(f"Failed to {operation}. Error: {error_code}")
+        NativeHelper.check_error(result, operation)
 
     def get_string(self, getter_func: Callable, max_size: int = 1024) -> str:
         buffer_size = c_int32(0)

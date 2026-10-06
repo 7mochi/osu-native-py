@@ -3,9 +3,11 @@ from __future__ import annotations
 from ctypes import byref
 from ctypes import c_int32
 from ctypes import c_uint8
+from ctypes import string_at
 from typing import Callable
 
 from ...native import ManagedObjectHandle
+from ...native import bindings
 from ..objects.error_code import ErrorCode
 
 
@@ -44,4 +46,10 @@ class NativeHelper:
     def check_error(result: int, operation: str) -> None:
         error_code = ErrorCode.from_value(result)
         if not error_code.is_success():
-            raise RuntimeError(f"Failed to {operation}. Error: {error_code}")
+            message = f"Failed to {operation}. Error: {error_code}"
+            pointer = bindings.ErrorHandler_GetLastMessage()
+            if pointer:
+                detail = string_at(pointer).decode("utf-8", errors="replace")
+                if detail:
+                    message += f"\n{detail}"
+            raise RuntimeError(message)

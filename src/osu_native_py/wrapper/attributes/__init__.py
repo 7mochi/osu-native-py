@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from .difficulty import TimedCatchDifficultyAttributes
+from .difficulty import TimedManiaDifficultyAttributes
+from .difficulty import TimedOsuDifficultyAttributes
+from .difficulty import TimedTaikoDifficultyAttributes
 from .difficulty.base import DifficultyAttributes
 from .difficulty.catch import CatchDifficultyAttributes
 from .difficulty.mania import ManiaDifficultyAttributes
@@ -17,6 +21,10 @@ __all__ = [
     "TaikoDifficultyAttributes",
     "CatchDifficultyAttributes",
     "ManiaDifficultyAttributes",
+    "TimedOsuDifficultyAttributes",
+    "TimedTaikoDifficultyAttributes",
+    "TimedCatchDifficultyAttributes",
+    "TimedManiaDifficultyAttributes",
     "PerformanceAttributes",
     "OsuPerformanceAttributes",
     "TaikoPerformanceAttributes",

@@ -32,6 +32,7 @@ Repository = "https://github.com/7mochi/osu-native-py"
 [tool.poetry.group.dev.dependencies]
 build = "^1.0.0"
 ctypesgen = "^1.1.1"
+jinja2 = "^3.1.6"
 hatchling = "^1.21.0"
 isort = "^5.13.0"
 autoflake = "^2.0.0"
@@ -92,7 +93,7 @@ exclude = ["*.so", "*.dll", "*.dylib"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/osu_native_py"]
-artifacts = ["*.so", "*.dll", "*.dylib", "bindings.py"]
+artifacts = ["*.so", "*.dll", "*.dylib", "bindings.py", "attributes.py", "score_info.py"]
 
 [tool.hatch.build.targets.wheel.hooks.custom]
 path = "tools/hatch_build.py"

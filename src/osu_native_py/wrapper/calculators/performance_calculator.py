@@ -95,31 +95,7 @@ class OsuPerformanceCalculator(PerformanceCalculator):
 
         native_score = score_info.to_native(ruleset.handle, beatmap.handle, mods.handle)
 
-        native_diff = bindings.NativeOsuDifficultyAttributes()
-        native_diff.starRating = difficulty_attributes.star_rating
-        native_diff.maxCombo = difficulty_attributes.max_combo
-        native_diff.aimDifficulty = difficulty_attributes.aim_difficulty
-        native_diff.aimDifficultSliderCount = difficulty_attributes.aim_difficult_slider_count
-        native_diff.speedDifficulty = difficulty_attributes.speed_difficulty
-        native_diff.speedNoteCount = difficulty_attributes.speed_note_count
-        native_diff.flashlightDifficulty = difficulty_attributes.flashlight_difficulty
-        native_diff.readingDifficulty = difficulty_attributes.reading_difficulty
-        native_diff.sliderFactor = difficulty_attributes.slider_factor
-        native_diff.aimTopWeightedSliderFactor = (
-            difficulty_attributes.aim_top_weighted_slider_factor
-        )
-        native_diff.speedTopWeightedSliderFactor = (
-            difficulty_attributes.speed_top_weighted_slider_factor
-        )
-        native_diff.aimDifficultStrainCount = difficulty_attributes.aim_difficult_strain_count
-        native_diff.speedDifficultStrainCount = difficulty_attributes.speed_difficult_strain_count
-        native_diff.readingDifficultNoteCount = difficulty_attributes.reading_difficult_note_count
-        native_diff.nestedScorePerObject = difficulty_attributes.nested_score_per_object
-        native_diff.legacyScoreBaseMultiplier = difficulty_attributes.legacy_score_base_multiplier
-        native_diff.maximumLegacyComboScore = difficulty_attributes.maximum_legacy_combo_score
-        native_diff.hitCircleCount = difficulty_attributes.hit_circle_count
-        native_diff.sliderCount = difficulty_attributes.slider_count
-        native_diff.spinnerCount = difficulty_attributes.spinner_count
+        native_diff = difficulty_attributes.to_native()
 
         native_perf = bindings.NativeOsuPerformanceAttributes()
         result = bindings.OsuPerformanceCalculator_Calculate(
@@ -163,17 +139,7 @@ class TaikoPerformanceCalculator(PerformanceCalculator):
 
         native_score = score_info.to_native(ruleset.handle, beatmap.handle, mods.handle)
 
-        native_diff = bindings.NativeTaikoDifficultyAttributes()
-        native_diff.starRating = difficulty_attributes.star_rating
-        native_diff.maxCombo = difficulty_attributes.max_combo
-        native_diff.mechanicalDifficulty = difficulty_attributes.mechanical_difficulty
-        native_diff.rhythmDifficulty = difficulty_attributes.rhythm_difficulty
-        native_diff.readingDifficulty = difficulty_attributes.reading_difficulty
-        native_diff.colourDifficulty = difficulty_attributes.colour_difficulty
-        native_diff.staminaDifficulty = difficulty_attributes.stamina_difficulty
-        native_diff.monoStaminaFactor = difficulty_attributes.mono_stamina_factor
-        native_diff.consistencyFactor = difficulty_attributes.consistency_factor
-        native_diff.staminaTopStrains = difficulty_attributes.stamina_top_strains
+        native_diff = difficulty_attributes.to_native()
 
         native_perf = bindings.NativeTaikoPerformanceAttributes()
         result = bindings.TaikoPerformanceCalculator_Calculate(
@@ -217,9 +183,7 @@ class CatchPerformanceCalculator(PerformanceCalculator):
 
         native_score = score_info.to_native(ruleset.handle, beatmap.handle, mods.handle)
 
-        native_diff = bindings.NativeCatchDifficultyAttributes()
-        native_diff.starRating = difficulty_attributes.star_rating
-        native_diff.maxCombo = difficulty_attributes.max_combo
+        native_diff = difficulty_attributes.to_native()
 
         native_perf = bindings.NativeCatchPerformanceAttributes()
         result = bindings.CatchPerformanceCalculator_Calculate(
@@ -263,9 +227,7 @@ class ManiaPerformanceCalculator(PerformanceCalculator):
 
         native_score = score_info.to_native(ruleset.handle, beatmap.handle, mods.handle)
 
-        native_diff = bindings.NativeManiaDifficultyAttributes()
-        native_diff.starRating = difficulty_attributes.star_rating
-        native_diff.maxCombo = difficulty_attributes.max_combo
+        native_diff = difficulty_attributes.to_native()
 
         native_perf = bindings.NativeManiaPerformanceAttributes()
         result = bindings.ManiaPerformanceCalculator_Calculate(
