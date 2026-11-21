@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from . import wrapper
-from .native import LIB_PATH
-from .native import bindings
+from osu_native_py import wrapper
+from osu_native_py.native import LIB_PATH
+from osu_native_py.native import bindings
 
 __all__ = [
     "wrapper",

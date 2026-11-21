@@ -1,5 +1,5 @@
 from __future__ import annotations
 
-from ....native.attributes import ManiaPerformanceAttributes
+from osu_native_py.native.attributes import ManiaPerformanceAttributes
 
 __all__ = ["ManiaPerformanceAttributes"]

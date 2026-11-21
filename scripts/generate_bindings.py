@@ -81,7 +81,7 @@ def generate(publish: Path, output: Path) -> None:
         raise RuntimeError("Unexpected ctypesgen loader output")
     contents = contents.replace(
         loader,
-        "from . import BIN_DIR\nadd_library_search_dirs([str(BIN_DIR)])",
+        "from osu_native_py.native import BIN_DIR\nadd_library_search_dirs([str(BIN_DIR)])",
     )
     compile(contents, str(output), "exec")
     for name, source in models.items():

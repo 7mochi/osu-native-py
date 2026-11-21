@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from ctypes import byref
 
-from ...native import NativeBeatmap
-from ...native import bindings
-from ..utils.native_handler import NativeHandler
+from osu_native_py.native import NativeBeatmap
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class Beatmap(NativeHandler):

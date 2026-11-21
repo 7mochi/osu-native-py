@@ -8,9 +8,9 @@ from ctypes import c_uint8
 from typing import Any
 from typing import Callable
 
-from ...native import ManagedObjectHandle
-from ..objects.error_code import ErrorCode
-from .native_helper import NativeHelper
+from osu_native_py.native import ManagedObjectHandle
+from osu_native_py.wrapper.objects.error_code import ErrorCode
+from osu_native_py.wrapper.utils.native_helper import NativeHelper
 
 
 class NativeHandler(ABC):

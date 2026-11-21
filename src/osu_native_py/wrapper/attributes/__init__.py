@@ -1,19 +1,19 @@
 from __future__ import annotations
 
-from .difficulty import TimedCatchDifficultyAttributes
-from .difficulty import TimedManiaDifficultyAttributes
-from .difficulty import TimedOsuDifficultyAttributes
-from .difficulty import TimedTaikoDifficultyAttributes
-from .difficulty.base import DifficultyAttributes
-from .difficulty.catch import CatchDifficultyAttributes
-from .difficulty.mania import ManiaDifficultyAttributes
-from .difficulty.osu import OsuDifficultyAttributes
-from .difficulty.taiko import TaikoDifficultyAttributes
-from .performance.base import PerformanceAttributes
-from .performance.catch import CatchPerformanceAttributes
-from .performance.mania import ManiaPerformanceAttributes
-from .performance.osu import OsuPerformanceAttributes
-from .performance.taiko import TaikoPerformanceAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedCatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedOsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedTaikoDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty.base import DifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty.catch import CatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty.mania import ManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty.osu import OsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty.taiko import TaikoDifficultyAttributes
+from osu_native_py.wrapper.attributes.performance.base import PerformanceAttributes
+from osu_native_py.wrapper.attributes.performance.catch import CatchPerformanceAttributes
+from osu_native_py.wrapper.attributes.performance.mania import ManiaPerformanceAttributes
+from osu_native_py.wrapper.attributes.performance.osu import OsuPerformanceAttributes
+from osu_native_py.wrapper.attributes.performance.taiko import TaikoPerformanceAttributes
 
 __all__ = [
     "DifficultyAttributes",

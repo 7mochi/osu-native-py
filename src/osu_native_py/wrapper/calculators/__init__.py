@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-from .difficulty_calculator import CatchDifficultyCalculator
-from .difficulty_calculator import DifficultyCalculator
-from .difficulty_calculator import ManiaDifficultyCalculator
-from .difficulty_calculator import OsuDifficultyCalculator
-from .difficulty_calculator import TaikoDifficultyCalculator
-from .difficulty_calculator import create_difficulty_calculator
-from .performance_calculator import CatchPerformanceCalculator
-from .performance_calculator import ManiaPerformanceCalculator
-from .performance_calculator import OsuPerformanceCalculator
-from .performance_calculator import PerformanceCalculator
-from .performance_calculator import TaikoPerformanceCalculator
-from .performance_calculator import create_performance_calculator
+from osu_native_py.wrapper.calculators.difficulty_calculator import CatchDifficultyCalculator
+from osu_native_py.wrapper.calculators.difficulty_calculator import DifficultyCalculator
+from osu_native_py.wrapper.calculators.difficulty_calculator import ManiaDifficultyCalculator
+from osu_native_py.wrapper.calculators.difficulty_calculator import OsuDifficultyCalculator
+from osu_native_py.wrapper.calculators.difficulty_calculator import TaikoDifficultyCalculator
+from osu_native_py.wrapper.calculators.difficulty_calculator import create_difficulty_calculator
+from osu_native_py.wrapper.calculators.performance_calculator import CatchPerformanceCalculator
+from osu_native_py.wrapper.calculators.performance_calculator import ManiaPerformanceCalculator
+from osu_native_py.wrapper.calculators.performance_calculator import OsuPerformanceCalculator
+from osu_native_py.wrapper.calculators.performance_calculator import PerformanceCalculator
+from osu_native_py.wrapper.calculators.performance_calculator import TaikoPerformanceCalculator
+from osu_native_py.wrapper.calculators.performance_calculator import create_performance_calculator
 
 __all__ = [
     "DifficultyCalculator",

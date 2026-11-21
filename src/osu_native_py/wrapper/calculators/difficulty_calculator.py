@@ -7,25 +7,25 @@ from ctypes import c_int32
 from typing import List
 from typing import Union
 
-from ...native import NativeCatchDifficultyCalculator
-from ...native import NativeManiaDifficultyCalculator
-from ...native import NativeOsuDifficultyCalculator
-from ...native import NativeTaikoDifficultyCalculator
-from ...native import bindings
-from ..attributes.difficulty import CatchDifficultyAttributes
-from ..attributes.difficulty import DifficultyAttributes
-from ..attributes.difficulty import ManiaDifficultyAttributes
-from ..attributes.difficulty import OsuDifficultyAttributes
-from ..attributes.difficulty import TaikoDifficultyAttributes
-from ..attributes.difficulty import TimedCatchDifficultyAttributes
-from ..attributes.difficulty import TimedManiaDifficultyAttributes
-from ..attributes.difficulty import TimedOsuDifficultyAttributes
-from ..attributes.difficulty import TimedTaikoDifficultyAttributes
-from ..objects import Beatmap
-from ..objects import ModsCollection
-from ..objects import Ruleset
-from ..objects.error_code import ErrorCode
-from ..utils.native_handler import NativeHandler
+from osu_native_py.native import NativeCatchDifficultyCalculator
+from osu_native_py.native import NativeManiaDifficultyCalculator
+from osu_native_py.native import NativeOsuDifficultyCalculator
+from osu_native_py.native import NativeTaikoDifficultyCalculator
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.attributes.difficulty import CatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import DifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import ManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import OsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TaikoDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedCatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedOsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedTaikoDifficultyAttributes
+from osu_native_py.wrapper.objects import Beatmap
+from osu_native_py.wrapper.objects import ModsCollection
+from osu_native_py.wrapper.objects import Ruleset
+from osu_native_py.wrapper.objects.error_code import ErrorCode
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class DifficultyCalculator(NativeHandler, ABC):

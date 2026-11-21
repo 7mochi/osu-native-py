@@ -5,26 +5,26 @@ from abc import abstractmethod
 from ctypes import byref
 from typing import Union
 
-from ...native import NativeCatchPerformanceCalculator
-from ...native import NativeManiaPerformanceCalculator
-from ...native import NativeOsuPerformanceCalculator
-from ...native import NativeTaikoPerformanceCalculator
-from ...native import bindings
-from ..attributes.difficulty import CatchDifficultyAttributes
-from ..attributes.difficulty import DifficultyAttributes
-from ..attributes.difficulty import ManiaDifficultyAttributes
-from ..attributes.difficulty import OsuDifficultyAttributes
-from ..attributes.difficulty import TaikoDifficultyAttributes
-from ..attributes.performance import CatchPerformanceAttributes
-from ..attributes.performance import ManiaPerformanceAttributes
-from ..attributes.performance import OsuPerformanceAttributes
-from ..attributes.performance import PerformanceAttributes
-from ..attributes.performance import TaikoPerformanceAttributes
-from ..objects import Beatmap
-from ..objects import ModsCollection
-from ..objects import Ruleset
-from ..objects import ScoreInfo
-from ..utils.native_handler import NativeHandler
+from osu_native_py.native import NativeCatchPerformanceCalculator
+from osu_native_py.native import NativeManiaPerformanceCalculator
+from osu_native_py.native import NativeOsuPerformanceCalculator
+from osu_native_py.native import NativeTaikoPerformanceCalculator
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.attributes.difficulty import CatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import DifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import ManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import OsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TaikoDifficultyAttributes
+from osu_native_py.wrapper.attributes.performance import CatchPerformanceAttributes
+from osu_native_py.wrapper.attributes.performance import ManiaPerformanceAttributes
+from osu_native_py.wrapper.attributes.performance import OsuPerformanceAttributes
+from osu_native_py.wrapper.attributes.performance import PerformanceAttributes
+from osu_native_py.wrapper.attributes.performance import TaikoPerformanceAttributes
+from osu_native_py.wrapper.objects import Beatmap
+from osu_native_py.wrapper.objects import ModsCollection
+from osu_native_py.wrapper.objects import Ruleset
+from osu_native_py.wrapper.objects import ScoreInfo
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class PerformanceCalculator(NativeHandler, ABC):

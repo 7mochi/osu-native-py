@@ -6,9 +6,9 @@ from ctypes import c_uint8
 from ctypes import string_at
 from typing import Callable
 
-from ...native import ManagedObjectHandle
-from ...native import bindings
-from ..objects.error_code import ErrorCode
+from osu_native_py.native import ManagedObjectHandle
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.objects.error_code import ErrorCode
 
 
 class NativeHelper:
