@@ -2,7 +2,8 @@
 current_version = "0.1.1"
 commit = true
 tag = true
-message = "chore: publish library to pypi"
+tag_name = "osu-native-py-v{new_version}"
+message = "chore: bump version to {new_version}"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"

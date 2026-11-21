@@ -31,6 +31,7 @@ Repository = "https://github.com/7mochi/osu-native-py"
 
 [tool.poetry.group.dev.dependencies]
 build = "^1.0.0"
+bump-my-version = { version = "^1.8.1", python = ">=3.10" }
 ctypesgen = "^1.1.1"
 jinja2 = "^3.1.6"
 hatchling = "^1.21.0"
