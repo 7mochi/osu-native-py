@@ -27,19 +27,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
+          - os: windows-2025
             platform: win-x64
             lib_name: osu.Native.dll
-          - os: macos-latest
+          - os: macos-26
             platform: osx-arm64
             lib_name: osu.Native.dylib
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             platform: linux-x64
             lib_name: osu.Native.so
-          - os: ubuntu-24.04-arm
+          - os: ubuntu-26.04-arm
             platform: linux-arm64
             lib_name: osu.Native.so
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             platform: linux-arm
             lib_name: osu.Native.so
 
@@ -130,31 +130,31 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             python-version: '3.10'
             wheel-platform: linux-x64
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             python-version: '3.11'
             wheel-platform: linux-x64
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             python-version: '3.12'
             wheel-platform: linux-x64
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             python-version: '3.13'
             wheel-platform: linux-x64
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             python-version: '3.14'
             wheel-platform: linux-x64
-          - os: ubuntu-24.04-arm
+          - os: ubuntu-26.04-arm
             python-version: '3.10'
             wheel-platform: linux-arm64
-          - os: ubuntu-24.04-arm
+          - os: ubuntu-26.04-arm
             python-version: '3.13'
             wheel-platform: linux-arm64
-          - os: windows-latest
+          - os: windows-2025
             python-version: '3.13'
             wheel-platform: win-x64
-          - os: macos-latest
+          - os: macos-26
             python-version: '3.13'
             wheel-platform: osx-arm64
 
@@ -195,7 +195,7 @@ jobs:
 
   publish:
     name: Publish to PyPI
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [build, test]
     if: startsWith(github.ref, 'refs/tags/osu-native-py-v')
     environment:
