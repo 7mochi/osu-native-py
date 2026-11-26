@@ -3,9 +3,9 @@ from __future__ import annotations
 from ctypes import byref
 from typing import Dict
 
-from ...native import NativeRuleset
-from ...native import bindings
-from ..utils.native_handler import NativeHandler
+from osu_native_py.native import NativeRuleset
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class Ruleset(NativeHandler):

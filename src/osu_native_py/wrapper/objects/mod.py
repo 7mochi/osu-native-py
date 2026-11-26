@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from ctypes import byref
 
-from ...native import NativeMod
-from ...native import bindings
-from ..utils.native_handler import NativeHandler
+from osu_native_py.native import NativeMod
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class Mod(NativeHandler):

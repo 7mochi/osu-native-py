@@ -6,7 +6,7 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "7mochi", email = "flyingcatdm@gmail.com" }]
 keywords = ["osu", "osu!", "difficulty", "performance", "pp"]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = []
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -16,7 +16,6 @@ classifiers = [
     "Operating System :: MacOS",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -31,7 +30,9 @@ Repository = "https://github.com/7mochi/osu-native-py"
 
 [tool.poetry.group.dev.dependencies]
 build = "^1.0.0"
+bump-my-version = { version = "^1.8.1", python = ">=3.10" }
 ctypesgen = "^1.1.1"
+jinja2 = "^3.1.6"
 hatchling = "^1.21.0"
 isort = "^5.13.0"
 autoflake = "^2.0.0"
@@ -50,7 +51,7 @@ skip_gitignore = true
 
 [tool.black]
 line-length = 100
-target-version = ["py38", "py39", "py310", "py311", "py312"]
+target-version = ["py310", "py311", "py312"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -92,7 +93,7 @@ exclude = ["*.so", "*.dll", "*.dylib"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/osu_native_py"]
-artifacts = ["*.so", "*.dll", "*.dylib", "bindings.py"]
+artifacts = ["*.so", "*.dll", "*.dylib", "bindings.py", "attributes.py", "score_info.py"]
 
 [tool.hatch.build.targets.wheel.hooks.custom]
 path = "tools/hatch_build.py"

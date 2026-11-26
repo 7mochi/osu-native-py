@@ -3,11 +3,11 @@ from __future__ import annotations
 from ctypes import byref
 from typing import List
 
-from ...native import NativeModsCollection
-from ...native import bindings
-from ..utils.native_handler import NativeHandler
-from .error_code import ErrorCode
-from .mod import Mod
+from osu_native_py.native import NativeModsCollection
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.objects.error_code import ErrorCode
+from osu_native_py.wrapper.objects.mod import Mod
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class ModsCollection(NativeHandler):

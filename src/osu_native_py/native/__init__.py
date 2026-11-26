@@ -53,7 +53,7 @@ else:
         str(BIN_DIR) + os.pathsep + os.environ.get("LD_LIBRARY_PATH", "")
     )
 
-from . import bindings
+from osu_native_py.native import bindings
 
 ManagedObjectHandle = bindings.ManagedObjectHandle
 

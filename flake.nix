@@ -16,16 +16,17 @@
           clang
           zlib
           gnumake
+          just
           python3
           poetry
         ];
 
         shellHook = ''
           echo "osu-native-py"
-          echo "  make all        (native lib + bindings + install)"
-          echo "  make test       (pytest)"
-          echo "  make lint       (pre-commit)"
-          echo "  make type-check (mypy)"
+          echo "  just all        (native lib + bindings + install)"
+          echo "  just test       (pytest)"
+          echo "  just lint       (pre-commit)"
+          echo "  just type-check (mypy)"
         '';
       };
     };

@@ -1,0 +1,115 @@
+{
+  "DifficultyAttributes": {
+    "description": "Base class for difficulty attributes.\n\nContains the difficulty of a beatmap, as output by a difficulty calculator.",
+    "fields": {
+      "star_rating": "The combined star rating of all skills.",
+      "max_combo": "The maximum achievable combo."
+    }
+  },
+  "OsuDifficultyAttributes": {
+    "description": "Difficulty attributes for osu!standard mode.",
+    "fields": {
+      "aim_difficulty": "The difficulty corresponding to the aim skill.",
+      "aim_difficult_slider_count": "The number of sliders weighted by difficulty.",
+      "speed_difficulty": "The difficulty corresponding to the speed skill.",
+      "speed_note_count": "The number of clickable objects weighted by difficulty.\nRelated to speed_difficulty.",
+      "flashlight_difficulty": "The difficulty corresponding to the flashlight skill.",
+      "reading_difficulty": "The difficulty corresponding to the reading skill.",
+      "slider_factor": "Describes how much of aim_difficulty is contributed by\nhitcircles or sliders. A value closer to 1.0 indicates most of\naim_difficulty is contributed by hitcircles. A value closer to 0.0\nindicates most of aim_difficulty is contributed by sliders.",
+      "aim_top_weighted_slider_factor": "Describes how much of aim_difficult_strain_count\nis contributed by hitcircles or sliders. A value closer to 0.0 indicates\nmost is contributed by hitcircles. A value closer to infinity indicates\nmost is contributed by sliders.",
+      "speed_top_weighted_slider_factor": "Describes how much of\nspeed_difficult_strain_count is contributed by hitcircles or sliders.\nA value closer to 0.0 indicates most is contributed by hitcircles.\nA value closer to infinity indicates most is contributed by sliders.",
+      "aim_difficult_strain_count": "The count of difficult aim strains.",
+      "speed_difficult_strain_count": "The count of difficult speed strains.",
+      "reading_difficult_note_count": "The count of difficult reading notes.",
+      "nested_score_per_object": "The nested score per object.",
+      "legacy_score_base_multiplier": "The base multiplier for legacy scoring.",
+      "maximum_legacy_combo_score": "The maximum legacy combo score.",
+      "hit_circle_count": "The number of hitcircles in the beatmap.",
+      "slider_count": "The number of sliders in the beatmap.",
+      "spinner_count": "The number of spinners in the beatmap."
+    }
+  },
+  "TaikoDifficultyAttributes": {
+    "description": "Difficulty attributes for osu!taiko mode.",
+    "fields": {
+      "mechanical_difficulty": "The difficulty corresponding to the mechanical\nskills in osu!taiko. This includes colour and stamina combined.",
+      "rhythm_difficulty": "The difficulty corresponding to the rhythm skill.",
+      "reading_difficulty": "The difficulty corresponding to the reading skill.",
+      "colour_difficulty": "The difficulty corresponding to the colour skill.",
+      "stamina_difficulty": "The difficulty corresponding to the stamina skill.",
+      "mono_stamina_factor": "The ratio of stamina difficulty from mono-color\n(single colour) streams to total stamina difficulty.",
+      "consistency_factor": "The factor corresponding to the consistency of a map.",
+      "stamina_top_strains": "The top stamina strains."
+    }
+  },
+  "CatchDifficultyAttributes": {
+    "description": "Difficulty attributes for osu!catch mode.\n\nThis class currently has no additional attributes beyond the base class.",
+    "fields": {}
+  },
+  "ManiaDifficultyAttributes": {
+    "description": "Difficulty attributes for osu!mania mode.\n\nThis class currently has no additional attributes beyond the base class.",
+    "fields": {}
+  },
+  "PerformanceAttributes": {
+    "description": "Base class for performance attributes.",
+    "fields": {
+      "total": "The final calculated performance points."
+    }
+  },
+  "OsuPerformanceAttributes": {
+    "description": "Performance attributes for osu!standard mode.",
+    "fields": {
+      "aim": "The aim portion of the final performance points.",
+      "speed": "The speed portion of the final performance points.",
+      "accuracy": "The accuracy portion of the final performance points.",
+      "flashlight": "The flashlight portion of the final performance points.",
+      "effective_miss_count": "Misses including an approximated amount of\nslider breaks.",
+      "speed_deviation": "Approximated unstable rate. None if not available.",
+      "combo_based_estimated_miss_count": "Estimated miss count based on the\nplayer's combo.",
+      "score_based_estimated_miss_count": "Estimated miss count based on the\nplayer's score. None if not available.",
+      "aim_estimated_slider_breaks": "Estimated number of slider breaks that\naffected the aim portion.",
+      "speed_estimated_slider_breaks": "Estimated number of slider breaks that\naffected the speed portion.",
+      "reading": "The reading portion of the final performance points."
+    }
+  },
+  "TaikoPerformanceAttributes": {
+    "description": "Performance attributes for osu!taiko mode.",
+    "fields": {
+      "difficulty": "The difficulty portion of the final performance points.",
+      "accuracy": "The accuracy portion of the final performance points.",
+      "estimated_unstable_rate": "Approximated unstable rate. None if not available."
+    }
+  },
+  "CatchPerformanceAttributes": {
+    "description": "Performance attributes for osu!catch mode.\n\nThis class currently has no additional attributes beyond the base class.",
+    "fields": {}
+  },
+  "ManiaPerformanceAttributes": {
+    "description": "Performance attributes for osu!mania mode.",
+    "fields": {
+      "difficulty": "The difficulty portion of the final performance points."
+    }
+  },
+  "ScoreInfo": {
+    "description": "Information about a score for performance calculation.\n\nContains the essential score statistics needed to calculate performance points:\ncombo, accuracy, hit counts, and optionally the legacy total score.",
+    "fields": {
+      "max_combo": "The maximum combo achieved in the score.",
+      "accuracy": "The accuracy of the score (0.0 to 1.0).",
+      "count_miss": "Number of misses. (osu!standard, osu!taiko, osu!mania)",
+      "count_meh": "Number of 50s (meh hits). (osu!standard, osu!taiko, osu!mania)",
+      "count_ok": "Number of 100s (ok hits). (osu!standard, osu!taiko, osu!mania)",
+      "count_good": "Number of 200s (good hits, osu!mania only)",
+      "count_great": "Number of 300s (great hits). (osu!standard, osu!taiko, osu!catch, osu!mania)",
+      "count_perfect": "Number of perfect hits (osu!mania only)",
+      "count_small_tick_miss": "Number of small tick misses. (osu!catch only)",
+      "count_small_tick_hit": "Number of small tick hits. (osu!catch only)",
+      "count_large_tick_miss": "Number of large tick misses. (osu!standard, osu!catch)",
+      "count_large_tick_hit": "Number of large tick hits. (osu!catch only)",
+      "count_slider_tail_hit": "Number of slider tails hit. (osu!standard only)",
+      "legacy_total_score": "The legacy total score, if available."
+    },
+    "defaults": {
+      "accuracy": 1.0
+    }
+  }
+}

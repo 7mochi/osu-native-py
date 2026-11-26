@@ -51,7 +51,7 @@ for platform_name in tag_for:
             present.append(platform_name)
 
 if not present:
-    raise SystemExit("No native binaries found. Run 'make all' first.")
+    raise SystemExit("No native binaries found. Run 'just all' first.")
 
 # Build a wheel for each present platform
 for platform_name in present:

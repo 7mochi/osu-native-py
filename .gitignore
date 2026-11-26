@@ -39,8 +39,8 @@ dmypy.json
 
 # Project-specific
 poetry.lock
-src/osu_native_py/native/bindings.py
-src/osu_native_py/native/bin/
+src/osu_native_py/native/*
+!src/osu_native_py/native/__init__.py
 
 # Nix / direnv
 .direnv/

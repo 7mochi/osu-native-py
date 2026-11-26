@@ -3,22 +3,29 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from ctypes import byref
+from ctypes import c_int32
+from typing import List
 from typing import Union
 
-from ...native import NativeCatchDifficultyCalculator
-from ...native import NativeManiaDifficultyCalculator
-from ...native import NativeOsuDifficultyCalculator
-from ...native import NativeTaikoDifficultyCalculator
-from ...native import bindings
-from ..attributes.difficulty import CatchDifficultyAttributes
-from ..attributes.difficulty import DifficultyAttributes
-from ..attributes.difficulty import ManiaDifficultyAttributes
-from ..attributes.difficulty import OsuDifficultyAttributes
-from ..attributes.difficulty import TaikoDifficultyAttributes
-from ..objects import Beatmap
-from ..objects import ModsCollection
-from ..objects import Ruleset
-from ..utils.native_handler import NativeHandler
+from osu_native_py.native import NativeCatchDifficultyCalculator
+from osu_native_py.native import NativeManiaDifficultyCalculator
+from osu_native_py.native import NativeOsuDifficultyCalculator
+from osu_native_py.native import NativeTaikoDifficultyCalculator
+from osu_native_py.native import bindings
+from osu_native_py.wrapper.attributes.difficulty import CatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import DifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import ManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import OsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TaikoDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedCatchDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedManiaDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedOsuDifficultyAttributes
+from osu_native_py.wrapper.attributes.difficulty import TimedTaikoDifficultyAttributes
+from osu_native_py.wrapper.objects import Beatmap
+from osu_native_py.wrapper.objects import ModsCollection
+from osu_native_py.wrapper.objects import Ruleset
+from osu_native_py.wrapper.objects.error_code import ErrorCode
+from osu_native_py.wrapper.utils.native_handler import NativeHandler
 
 
 class DifficultyCalculator(NativeHandler, ABC):
@@ -50,6 +57,30 @@ class DifficultyCalculator(NativeHandler, ABC):
             A structure describing the difficulty of the beatmap.
         """
 
+    @abstractmethod
+    def calculate_timed(self, mods: ModsCollection) -> List[
+        Union[
+            TimedOsuDifficultyAttributes,
+            TimedTaikoDifficultyAttributes,
+            TimedCatchDifficultyAttributes,
+            TimedManiaDifficultyAttributes,
+        ]
+    ]:
+        """Calculate difficulty attributes at each hit object."""
+
+    def _calculate_timed(self, mods, native_type, calculate, attributes_type):
+        self._check_not_closed()
+        size = c_int32()
+        result = calculate(self.handle, mods.handle, None, byref(size))
+        if result != ErrorCode.BUFFER_SIZE_QUERY:
+            self.check_error(result, "query timed difficulty size")
+            raise RuntimeError(f"Unexpected buffer query result: {result}")
+
+        buffer = (native_type * size.value)()
+        result = calculate(self.handle, mods.handle, buffer, byref(size))
+        self.check_error(result, "calculate timed difficulty")
+        return [attributes_type.from_native(value) for value in buffer[: size.value]]
+
 
 class OsuDifficultyCalculator(DifficultyCalculator):
     """Difficulty calculator for osu!standard mode."""
@@ -77,6 +108,14 @@ class OsuDifficultyCalculator(DifficultyCalculator):
         self.check_error(result, "calculate osu! difficulty")
 
         return OsuDifficultyAttributes.from_native(native_diff)
+
+    def calculate_timed(self, mods: ModsCollection) -> List[TimedOsuDifficultyAttributes]:
+        return self._calculate_timed(
+            mods,
+            bindings.NativeTimedOsuDifficultyAttributes,
+            bindings.OsuDifficultyCalculator_CalculateTimed,
+            TimedOsuDifficultyAttributes,
+        )
 
     def _destroy(self) -> None:
         bindings.OsuDifficultyCalculator_Destroy(self.handle)
@@ -109,6 +148,14 @@ class TaikoDifficultyCalculator(DifficultyCalculator):
 
         return TaikoDifficultyAttributes.from_native(native_diff)
 
+    def calculate_timed(self, mods: ModsCollection) -> List[TimedTaikoDifficultyAttributes]:
+        return self._calculate_timed(
+            mods,
+            bindings.NativeTimedTaikoDifficultyAttributes,
+            bindings.TaikoDifficultyCalculator_CalculateTimed,
+            TimedTaikoDifficultyAttributes,
+        )
+
     def _destroy(self) -> None:
         bindings.TaikoDifficultyCalculator_Destroy(self.handle)
 
@@ -140,6 +187,14 @@ class CatchDifficultyCalculator(DifficultyCalculator):
 
         return CatchDifficultyAttributes.from_native(native_diff)
 
+    def calculate_timed(self, mods: ModsCollection) -> List[TimedCatchDifficultyAttributes]:
+        return self._calculate_timed(
+            mods,
+            bindings.NativeTimedCatchDifficultyAttributes,
+            bindings.CatchDifficultyCalculator_CalculateTimed,
+            TimedCatchDifficultyAttributes,
+        )
+
     def _destroy(self) -> None:
         bindings.CatchDifficultyCalculator_Destroy(self.handle)
 
@@ -170,6 +225,14 @@ class ManiaDifficultyCalculator(DifficultyCalculator):
         self.check_error(result, "calculate Mania difficulty")
 
         return ManiaDifficultyAttributes.from_native(native_diff)
+
+    def calculate_timed(self, mods: ModsCollection) -> List[TimedManiaDifficultyAttributes]:
+        return self._calculate_timed(
+            mods,
+            bindings.NativeTimedManiaDifficultyAttributes,
+            bindings.ManiaDifficultyCalculator_CalculateTimed,
+            TimedManiaDifficultyAttributes,
+        )
 
     def _destroy(self) -> None:
         bindings.ManiaDifficultyCalculator_Destroy(self.handle)

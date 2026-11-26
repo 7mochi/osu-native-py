@@ -67,3 +67,5 @@ def test_beatmap_error_handling():
         assert False, "Expected an error when loading a nonexistent beatmap"
     except RuntimeError as e:
         assert "Failed to create beatmap" in str(e)
+        assert "FileNotFoundException" in str(e)
+        assert "nonexistent.osu" in str(e)
